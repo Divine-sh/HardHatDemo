@@ -27,7 +27,7 @@ function store(uint256 num) public {
     emit NumberLog(0, number);
     require(number>300, "need big number");
     emit NumberLog(1, 1);
-    1/(num-num);
+//    1/(num-num);
 }
 
 /**

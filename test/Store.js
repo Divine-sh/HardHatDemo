@@ -35,10 +35,13 @@ describe("Sotre contract", function() {
     });
 
     it("Error Met", async function() {
-        const value = await hardhatToken.retrieve();
-        console.log(value)
-        console.log(eval(value).toString())
+        try {
+            await hardhatToken.store(200)
+            expect(0).to.equal(1)
+        }
+        catch (err){
+            console.error(err)
+        }
 
-        await hardhatToken.store(200)
     });
 });
