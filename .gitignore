@@ -1,5 +1,22 @@
 node_modules
-
+yarn-error.log
 #Hardhat files
 cache
 artifacts
+typechain
+
+#Secret key
+.secret.ts
+node_modules.nosync
+.env
+dist
+*.json
+.idea
+*.zip
+*.sh
+data/
+!data/v2/logsETH.txt
+!data/v2/logsNOETH.txt
+*privateKeyPool*
+logs
+!package-lock.json
