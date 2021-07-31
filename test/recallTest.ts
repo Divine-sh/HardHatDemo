@@ -6,7 +6,7 @@ describe("recall", ()=>{
     let lp='0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc'
     it("12930983",async ()=>{
         let block =12930983;
-        utils.changeForkBlockV2(block);
+        await utils.changeForkBlockV2(block);
         let lpPair = await getIUniswapV2Pair(lp)
 
         let reserve = await lpPair.getReserves();
@@ -15,7 +15,7 @@ describe("recall", ()=>{
 
     it("12930900",async ()=>{
         let block =12930900;
-        utils.changeForkBlockV2(block);
+        await utils.changeForkBlockV2(block);
         let lpPair = await getIUniswapV2Pair(lp)
 
         let reserve = await lpPair.getReserves();
