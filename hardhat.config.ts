@@ -29,7 +29,10 @@ const config: HardhatUserConfig = {
           'privateKey': newWallet.privateKey,
           balance:'20000000000000000000'
         }
-      ]
+      ],
+      hardfork: "london",
+      gasPrice: Math.pow(10,11),
+      chainId:31337
     },
     ETH:{
       url: ETH_RPC,
