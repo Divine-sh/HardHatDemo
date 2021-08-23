@@ -17,7 +17,7 @@ const config: HardhatUserConfig = {
       // loggingEnabled: true,
       forking: {
         url: ETH_RPC,
-        // blockNumber: ETH_BLOCK_NUMBER,
+        blockNumber: 13080988,
         enabled: true,
       },
       accounts: [

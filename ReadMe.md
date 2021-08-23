@@ -21,7 +21,14 @@ ETH_RPC=http://172.17.31.165:3335
 ```
 # 单元测试范例
 
+## storeage
+```
+npx hardhat compile
+npm run test test/StorageTest.ts
+
+```
 ## token 范例
+
 部署本机合约,并读取状态
 ```
 npm run test test/TokenTest.ts 
