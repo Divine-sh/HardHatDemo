@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 require('dotenv').config()
 
 const pkey:string = process.env.PRIVATE_KEY || "6a5508b9ca8a09217789fc9d2b37688093d2b72eb450fcb6bf5e9b080a112112" //fake one
-const ETH_RPC = process.env.ETH_RPC||"http://172.17.31.104:3335" //office run time defuatl
+const ETH_RPC = process.env.ETH_RPC||"http://39.105.105.233:3335" //office run time defuatl
 
 const newWallet = ethers.Wallet.createRandom();
 
