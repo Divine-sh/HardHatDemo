@@ -20,6 +20,7 @@ describe("UniSwap contract Test", function() {
     });
 
     it("UniSwap LP and show Reserve ", async function() {
+        //创建合约实例
         let uniFactory = new ethers.Contract(UNI_FACTORY, ABICONFIG.UNIFACTORY_ABI,ethers.provider)
 
         let lpAddress = await uniFactory.getPair(WETH, USDC)
@@ -52,8 +53,4 @@ describe("UniSwap contract Test", function() {
     //     let balance = await bPool.balanceOf(wallet.address)
     //     console.log("balance is ", balance.toString())
     // });
-
-
-
-
 });
