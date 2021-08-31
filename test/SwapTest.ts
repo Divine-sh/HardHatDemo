@@ -23,6 +23,7 @@ describe("UniSwap contract Test", function () {
       ethers.provider
     );
     const LPAddress = await uniFactory.getPair(WETH, USDC);
+    console.log('lp address', LPAddress);
     const USDCContract = new ethers.Contract(USDC, USDC_ABI, ethers.provider);
 
     const [newWallet] = await ethers.getSigners();
@@ -69,8 +70,12 @@ describe("UniSwap contract Test", function () {
     );
 
     // 将 buyAmount 抵押并由 WETHContract 转到 LPAddress 账户
-    await WETHContract.connect(newWallet).deposit({ value: buyAmount });
-    await WETHContract.connect(newWallet).transfer(LPAddress, buyAmount);
+    let depositRes = await WETHContract.connect(newWallet).deposit({ value: buyAmount });
+    console.log('depositRes wait', await depositRes.wait())
+
+    let transferRes = await WETHContract.connect(newWallet).transfer(LPAddress, buyAmount);
+    console.log('transferRes wait', await transferRes.wait())
+
     console.log(
       "\n<buyAmount of USDC =",
       ethers.utils.formatUnits(outAmount, 6),

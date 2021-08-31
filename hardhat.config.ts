@@ -27,7 +27,7 @@ const config: HardhatUserConfig = {
         },
         {
           'privateKey': newWallet.privateKey,
-          balance:'20000000000000000000'
+          balance:'1000000000000000000000000'
         }
       ],
       hardfork: "london",

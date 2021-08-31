@@ -23,6 +23,8 @@ describe("Storage Demo contract", function() {
             console.log('blockNumber', block.number)
         }
 
+
+
         console.log("Init Contract")
     });
 
@@ -38,7 +40,29 @@ describe("Storage Demo contract", function() {
     it("set test more than 300", async function() {
         // 更改合约状态
         let newValue = 5000;
-        await storageContract.store(newValue)
+        let [signer] = await ethers.getSigners()
+
+        let trx = await storageContract.store(newValue)
+        let res = await trx.wait()
+        console.log('trx res', res, res.gasUsed.toString())
+        console.log('from' , res.from, signer.address)
+
+        let retrieveValue = await storageContract.retrieve()
+
+        // 合约上返回的数据模式是 BigNumber, 需要经过转化之后才能使用
+        console.log(retrieveValue, retrieveValue.toString())
+        expect(retrieveValue).eq(newValue)
+    });
+
+    it("set test more than 300 connect", async function() {
+        // 更改合约状态
+        let newValue = 500;
+        let [signer, anotherSigner] = await ethers.getSigners()
+
+        let trx = await storageContract.connect(anotherSigner).store(newValue)
+        let res = await trx.wait()
+        console.log('trx res', res, res.gasUsed.toString())
+        console.log('from' , res.from, signer.address, anotherSigner.address)
 
         let retrieveValue = await storageContract.retrieve()
 
