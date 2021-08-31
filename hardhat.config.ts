@@ -31,7 +31,7 @@ const config: HardhatUserConfig = {
         }
       ],
       hardfork: "london",
-      gasPrice: Math.pow(10,11),
+      gasPrice: Math.pow(10,12),
       chainId:31337
     },
     ETH:{
