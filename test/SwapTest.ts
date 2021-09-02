@@ -4,115 +4,87 @@ import ABICONFIG from "../abis";
 import { lpv2ABI } from "../abis/lpv2";
 import { routerV2ABI } from "../abis/router";
 import { USDC_ABI } from "../abis/usdc";
-import { WETH_ABI } from "../abis/weth";
+import { WETH_ABI } from "../abis/WETH";
+import { UNI_ABI } from "../abis/UNI";
+
+
 
 describe("UniSwap contract Test", function () {
-  const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
-  const WETH = configs.TokenConfig.WETH; // WETH 合约地址
-  const USDC = configs.TokenConfig.USDC; // USDC 合约地址
-  const routerAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // Uniswap V2 Router 合约地址
-  const myETHAddress = "0xB13908caBC896127C66241469AEfDd0372900927"; // 个人 ETH 钱包地址
+
+  // Define the addresses for tokens
+  const uniFactoryToken = configs.TokenConfig.UNISWAP_FACTORY;
+  const wethToken = configs.TokenConfig.WETH;
+  const uniToken = configs.TokenConfig.UNI_TOKEN;
+  const usdcToken = configs.TokenConfig.USDC;
+  const routerAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+  const myETHAddress = "0xB13908caBC896127C66241469AEfDd0372900927";
 
   beforeEach(async () => {});
 
   it("Swap unittest", async function () {
-    const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-    const uniFactory = new ethers.Contract(
-      UNI_FACTORY,
-      ABICONFIG.UNIFACTORY_ABI,
-      ethers.provider
-    );
-    const LPAddress = await uniFactory.getPair(WETH, USDC);
-    console.log('lp address', LPAddress);
-    const USDCContract = new ethers.Contract(USDC, USDC_ABI, ethers.provider);
 
-    const [newWallet] = await ethers.getSigners();
-    const LPContract = new ethers.Contract(LPAddress, lpv2ABI, ethers.provider);
+    const wethContract = new ethers.Contract(wethToken, WETH_ABI, ethers.provider);
+    const uniContract = new ethers.Contract(uniToken, UNI_ABI, ethers.provider);
+    const routerContract = new ethers.Contract(routerAddress, routerV2ABI, ethers.provider);
+    const uniFactoryContract = new ethers.Contract(uniFactoryToken, ABICONFIG.UNIFACTORY_ABI, ethers.provider);
 
-    // 查询交易前的两个账户的两种币的余额
-    const LPWethBalanceBeforeSwapping = await WETHContract.balanceOf(LPAddress);
-    const MyWethBalanceBeforeSwapping = await WETHContract.balanceOf(
-      myETHAddress
-    );
-    console.log(
-      "\n\nLP WETH Balance Before Swapping =",
-      ethers.utils.formatUnits(LPWethBalanceBeforeSwapping, 18)
-    );
-    console.log(
-      "My WETH Balance Before Swapping =",
-      ethers.utils.formatUnits(MyWethBalanceBeforeSwapping, 18)
-    );
+    const [signer] = await ethers.getSigners();
+    const lpAddress = await uniFactoryContract.getPair(wethToken, uniToken);
+    console.log('Step1, deposit WETH:\nlpAddress', lpAddress)
+    const lpContract = new ethers.Contract(lpAddress, lpv2ABI, ethers.provider);
 
-    const LPUSDCBalanceBeforeSwapping = await USDCContract.balanceOf(LPAddress);
-    const MyUSDCBalanceBeforeSwapping = await USDCContract.balanceOf(
-      myETHAddress
-    );
-    console.log(
-      "LP USDC Balance Before Swapping =",
-      ethers.utils.formatUnits(LPUSDCBalanceBeforeSwapping, 6)
-    );
-    console.log(
-      "My USDC Balance Before Swapping =",
-      ethers.utils.formatUnits(MyUSDCBalanceBeforeSwapping, 6)
-    );
+    let [reserve0, reserve1] = await lpContract.getReserves(); // reserve0 -> UNI, reserve1 -> WETH
+    let buyAmount = ethers.utils.parseUnits('1', 18);
+    let outAmount = await routerContract.getAmountOut(buyAmount, reserve1, reserve0);
+    console.log('UNI outAmount =', ethers.utils.formatUnits(outAmount, 18));
 
-    let [reserve0, reserve1] = await LPContract.getReserves();
-    const routerContract = new ethers.Contract(
-      routerAddress,
-      routerV2ABI,
-      ethers.provider
-    );
-    let buyAmount = ethers.utils.parseUnits("1", 18);
-    let outAmount = await routerContract.getAmountOut(
-      buyAmount,
-      reserve1,
-      reserve0
-    );
+    // Step1: signer 抵押 1 ETH -> WETH，并将 1 WETH 存到 lpContract
+    // lpContract 的 WETH 余额会增加 1
+    const depositRes = await wethContract.connect(signer).deposit({ value: buyAmount });
+    // console.log('depositRes wait', await depositRes.wait());
 
-    // 将 buyAmount 抵押并由 WETHContract 转到 LPAddress 账户
-    let depositRes = await WETHContract.connect(newWallet).deposit({ value: buyAmount });
-    console.log('depositRes wait', await depositRes.wait())
+    let lpWethBalance = await wethContract.balanceOf(lpAddress);
+    console.log('lpWethBalance before transferring', ethers.utils.formatUnits(lpWethBalance, 18));
 
-    let transferRes = await WETHContract.connect(newWallet).transfer(LPAddress, buyAmount);
-    console.log('transferRes wait', await transferRes.wait())
+    const transferRes = await wethContract.connect(signer).transfer(lpAddress, buyAmount);
+    // console.log('transferRes wait', await transferRes.wait());
 
-    console.log(
-      "\n<buyAmount of USDC =",
-      ethers.utils.formatUnits(outAmount, 6),
-      ">\n"
-    );
-    console.log("The swapping is starting ...");
-    await LPContract.connect(newWallet).swap(outAmount, 0, myETHAddress, []);
-    console.log("The swapping has done.\n\n");
+    lpWethBalance = await wethContract.balanceOf(lpAddress);
+    console.log('lpWethBalance after transferring', ethers.utils.formatUnits(lpWethBalance, 18));
 
-    // 查询交易后的两个账户的两种币的余额
-    const LPWethBalanceAfterSwapping = await WETHContract.balanceOf(LPAddress);
-    const MyWethBalanceAfterSwapping = await WETHContract.balanceOf(
-      myETHAddress
-    );
 
-    console.log(
-      "LP WETH Balance After Swapping =",
-      ethers.utils.formatUnits(LPWethBalanceAfterSwapping, 18)
-    );
-    console.log(
-      "My WETH Balance After Swapping =",
-      ethers.utils.formatUnits(MyWethBalanceAfterSwapping, 18)
-    );
+    // Step2: signer 将存放在 lpContract 的 1 WETH 转换为 outAmount UNI
+    // lpContract 的 UNI 余额减少 outAmount，newLpContract 的 UNI 余额增加 outAmount
+    console.log('\n\nStep2, transfer WETH to UNI:');
+    let lpUniBalance = await uniContract.balanceOf(lpAddress);
+    console.log('lpUniBalance before swapping =', ethers.utils.formatUnits(lpUniBalance, 18));
 
-    const LPUSDCBalanceAfterSwapping = await USDCContract.balanceOf(LPAddress);
-    const MyUSDCBalanceAfterSwapping = await USDCContract.balanceOf(
-      myETHAddress
-    );
+    const newLpAddress = await uniFactoryContract.getPair(uniToken, usdcToken);
+    let newLpUniBalance = await uniContract.balanceOf(newLpAddress);
+    console.log('newLpUniBalance before swapping =', ethers.utils.formatUnits(newLpUniBalance, 18));
 
-    console.log(
-      "LP USDC Balance After Swapping =",
-      ethers.utils.formatUnits(LPUSDCBalanceAfterSwapping, 6)
-    );
-    console.log(
-      "My USDC Balance After Swapping =",
-      ethers.utils.formatUnits(MyUSDCBalanceAfterSwapping, 6),
-      "\n\n"
-    );
+    await lpContract.connect(signer).swap(outAmount, 0, newLpAddress, []);
+
+    lpUniBalance = await uniContract.balanceOf(lpAddress);
+    console.log('lpUniBalance after swapping =', ethers.utils.formatUnits(lpUniBalance, 18))
+
+    newLpUniBalance = await uniContract.balanceOf(newLpAddress);
+    console.log('newLpUniBalance after swapping =', ethers.utils.formatUnits(newLpUniBalance, 18))
+
+    // Step3: signer 将存放在 newLpContract 的 outAmount UNI 转换为 USDC 并转到 myETHAddress
+    // newLpContract 的 USDC 余额减少 outAmount，myETHAddress 的 USDC 余额增加 outAmount
+    console.log('\n\nStep3, transfer UNI to USDC:')
+    const newLpContract = new ethers.Contract(newLpAddress, lpv2ABI, ethers.provider);
+    [reserve0, reserve1] = await newLpContract.getReserves(); //reserve0 ->  UNI, reserve1 -> USDC
+    outAmount = await routerContract.getAmountOut(outAmount, reserve0, reserve1);
+    console.log('USDC outAmount =', ethers.utils.formatUnits(outAmount, 6))
+
+    const usdcContract = new ethers.Contract(usdcToken, USDC_ABI, ethers.provider);
+    let myUsdcBalance = await usdcContract.balanceOf(myETHAddress);
+    console.log('myUsdcBalance before swapping', ethers.utils.formatUnits(myUsdcBalance, 6));
+
+    await newLpContract.connect(signer).swap(0, outAmount, myETHAddress, [])
+    myUsdcBalance = await usdcContract.balanceOf(myETHAddress);
+    console.log('myUsdcBalance after swapping', ethers.utils.formatUnits(myUsdcBalance, 6));
   });
 });
