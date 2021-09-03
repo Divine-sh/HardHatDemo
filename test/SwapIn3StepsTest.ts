@@ -9,7 +9,7 @@ import { UNI_ABI } from "../abis/UNI";
 
 
 
-describe("UniSwap contract Test", function () {
+describe("UniSwap contract swapping in 3 steps test", function () {
 
   // Define the addresses for tokens
   const uniFactoryToken = configs.TokenConfig.UNISWAP_FACTORY;
