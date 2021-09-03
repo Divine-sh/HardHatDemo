@@ -23,8 +23,6 @@ describe("Storage Demo contract", function() {
             console.log('blockNumber', block.number)
         }
 
-
-
         console.log("Init Contract")
     });
 
