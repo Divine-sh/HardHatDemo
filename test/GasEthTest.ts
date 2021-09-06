@@ -6,8 +6,14 @@ import configs from "../src/config";
 import {WETH_ABI} from "../abis/WETH";
 import {routerV2ABI} from "../abis/router";
 import ErrnoException = NodeJS.ErrnoException;
+import {copyFileSync} from "fs";
+import {log} from "util";
 const fs = require('fs');
-
+type libUnit = {
+    lpAdd: string,
+    gasUsed: number,
+    default: string
+}
 describe("UniSwap Gas Predict", function() {
 
     let uniFactory: IUniswapV2Factory;
@@ -15,26 +21,33 @@ describe("UniSwap Gas Predict", function() {
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
     const UNI_ROUTER = configs.TokenConfig.UNISWAP_ROUTER;
     const WETH = configs.TokenConfig.WETH; // WETH 合约地址
-    let lpAddress = '0xe3E0d7BcFE5271Ff739414bfBf1d5257fA788bE5';
+    let lpAddress:string;
+
+    let lpAdds: string[] = [];
+    let totalGas: number[] = [];
+    let lib: libUnit[] = [];
 
     fs.readFile('./lpdata/white_eth.txt', function(err:ErrnoException,data:Buffer) {
         if(err) throw err;
         const arr = data.toString().replace(/\r\n/g,'\n').split('\n');
-        //let n = 0;
+        let n = 0;
         for(let i of arr) {
+            n++;
             if(i.length != 0)
             {
                 let json_obj = JSON.parse(i);
-                console.log(json_obj.lp);
+                //console.log(n,": ",json_obj.lp);
+                lpAdds.push(json_obj.lp);
+                //console.log(n,": ",json_obj.lp);
             }
-            // console.log(n);
-            // n = n +1;
         }
+        //console.log(lpAdds.length);
     });
 
 
 
     beforeEach(async () => {
+        //console.log(lpAdds.length);
         uniFactory = await utils.uniswapTools.getIUniswapFactory(UNI_FACTORY);
     });
 
@@ -49,46 +62,81 @@ describe("UniSwap Gas Predict", function() {
     //     console.log('token 1', token1, reserve1.toString() )
     //     console.log('blockTimestampLast', blockTimestampLast)
     // });
+    //console.log(lpAdds.length); //输出0
 
     it("Get LP and test Swap ", async function() {
-
+        this.timeout(0);
         const [owner] = await ethers.getSigners();
-        console.log("lp address is: ", lpAddress);
         // 0.建立WETH合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-        // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
-        let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
-        // 2.lpContract.token0()，lpContract.token1()可以得到lp对应的两种token(token1是weth)
-        let token0 = await lpContract.token0();
-        let token1 = await lpContract.token1();
-        // 3.通过lpContract.getReserves()可以得到token0和token1的余额
-        let {blockTimestampLast, reserve0, reserve1} = await lpContract.getReserves();
-        console.log('\ntoken 0', token0, reserve0.toString() );
-        console.log('token 1', token1, reserve1.toString() );
-        console.log('blockTimestampLast', blockTimestampLast,"\n");
-        // 4.确定buyAmount，计算outAmount，将buyAmount抵押并由WETHContract转到lpAddress账户
-        let buyAmount = ethers.utils.parseUnits("1", 18);
-        console.log("<buyAmount of WETH =", ethers.utils.formatUnits(buyAmount, 18), ">");
-        const uniRouter = await new ethers.Contract(UNI_ROUTER, routerV2ABI, ethers.provider);
-        let outAmount = await uniRouter.getAmountOut(buyAmount,reserve1,reserve0);
-        console.log("<outAmount of token0 =", ethers.utils.formatUnits(outAmount), ">\n");
+        for (let i = 0; i < lpAdds.length; i++)
+        {
+            //lpAddress = '0x2de99d4388280d25EE37b43B76e2b156fd2457A6';
+            lpAddress = lpAdds[i];
+            console.log("lp address is: ", lpAddress);
 
+            // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
+            let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
 
-        let deposit_trx = await WETHContract.connect(owner).deposit({ value: buyAmount});
-        let deposit_res = await deposit_trx.wait();
-        //console.log("","deposit gasUsed: "+deposit_res.gasUsed,"");
+            // 2.lpContract.token0()，lpContract.token1()可以得到lp对应的两种token(token1是weth)
+            let token0 = await lpContract.token0(); let token1 = await lpContract.token1();
 
-        let transfer_trx = await WETHContract.connect(owner).transfer(lpAddress, buyAmount);
-        let transfer_res = await transfer_trx.wait();
-        //console.log("","transfer gasUsed: "+transfer_res.gasUsed,"");
-        // 5.调用lp合约的swap函数进行交换
-        let swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);
-        let swap_res = await swap_trx.wait();
-        //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
-        // 6.统计gasUsed之和
-        let total_gasUsed = Number(deposit_res.gasUsed) + Number(transfer_res.gasUsed) + Number(swap_res.gasUsed);
-        console.log("","Total gasUsed: "+total_gasUsed,"");
+            // 3.通过lpContract.getReserves()可以得到token0和token1的余额
+            let {blockTimestampLast, reserve0, reserve1} = await lpContract.getReserves();
+            console.log('\ntoken 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() ); console.log('blockTimestampLast', blockTimestampLast,"\n");
+
+            // 4.确定buyAmount，计算outAmount，将buyAmount抵押并由WETHContract转到lpAddress账户
+            let buyAmount = ethers.utils.parseUnits("1", 18);
+            console.log("<buyAmount of WETH =", ethers.utils.formatUnits(buyAmount, 18), ">");
+            const uniRouter = await new ethers.Contract(UNI_ROUTER, routerV2ABI, ethers.provider);
+            //function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut);
+            // 判断reserveIn和reserveOut
+            let reserveIn,reserveOut;
+            if (token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
+                {reserveIn = reserve0; reserveOut = reserve1;}
+            else
+                {reserveIn = reserve1; reserveOut = reserve0;}
+            //计算outAmount
+            let outAmount = await uniRouter.getAmountOut(buyAmount,reserveIn,reserveOut);
+            // let outAmount = await uniRouter.getAmountOut(buyAmount,reserve1,reserve0);
+            console.log("<outAmount of another token =", ethers.utils.formatUnits(outAmount, 6), ">\n");
+
+            let deposit_trx = await WETHContract.connect(owner).deposit({ value: buyAmount});
+            let deposit_res = await deposit_trx.wait();
+            //console.log("","deposit gasUsed: "+deposit_res.gasUsed,"");
+
+            let transfer_trx = await WETHContract.connect(owner).transfer(lpAddress, buyAmount);
+            let transfer_res = await transfer_trx.wait();
+            //console.log("","transfer gasUsed: "+transfer_res.gasUsed,"");
+            // 5.调用lp合约的swap函数进行交换
+            try {
+                let swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);
+                let swap_res = await swap_trx.wait();
+                //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
+                // 6.统计gasUsed之和
+                let total_gasUsed = Number(deposit_res.gasUsed) + Number(transfer_res.gasUsed) + Number(swap_res.gasUsed);
+                //totalGas[i] = Number(total_gasUsed);
+                console.log("","Total gasUsed: "+total_gasUsed,"");
+                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i].lpAdd = lpAddress;
+                lib[i].gasUsed = Number(total_gasUsed);
+            } catch (err) {
+                //console.log(err.toString());
+                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i].lpAdd = lpAddress;
+                lib[i].default = err.toString();
+            }
+            finally {
+                fs.writeFileSync('./lpdata/lpgas.json', JSON.stringify(lib, null, 4), 'utf-8');
+            }
+        }
+        console.log(lib.length);
+        for (let j = 0; j < lib.length; j++)
+            console.log(lib[j].lpAdd,lib[j].gasUsed);
+
+        fs.writeFileSync('./lpdata/lpgas.json', JSON.stringify(lib, null, 4), 'utf-8');
 
     });
+
 
 });
