@@ -21,8 +21,8 @@ describe("UniSwap contract swapping in 1 step test", function () {
     /*
      * Case 的作用：拥有 ETH 的账户 signer 一步直接将 ETH 兑换成 USDC 并转给目标用户
      *
-     * 步骤：先使用 getAmountsOut 算一下 1 ETH(WETH) 可以换 amountOut 个 USDC，
-     *      再调用 swapExactETHForTokens 将 amountOut 个 USDC 转给目标用户。
+     * 步骤：先使用 getAmountsOut 算一下 1 ETH(WETH) 可以换多少个 USDC （非必须，只是方便核验）
+     *      再调用 swapExactETHForTokens 将 1 ETH 对应的 USDC 转给目标用户
      * */
 
     const ethAmount = ethers.utils.parseUnits("1", 18);
@@ -46,10 +46,13 @@ describe("UniSwap contract swapping in 1 step test", function () {
       "Before swapping, myUsdcBalance =",
       ethers.utils.formatUnits(myUsdcBalance, 6)
     );
+
+    // amountOutMin: The minimum amount of output tokens that must be received for the transaction not to revert.
+    const amountOutMin = ethers.utils.parseUnits("1000", 6);
     await router02Contract
       .connect(signer)
       .swapExactETHForTokens(
-        amountOut,
+        amountOutMin,
         [wethToken, usdcToken],
         myETHAddress,
         formattedTimestamp,
