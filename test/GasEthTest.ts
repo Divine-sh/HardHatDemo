@@ -17,7 +17,7 @@ type libUnit = {
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_gth_gas_no_depos.json';
+    const outputPath:string = './lpdata/lp_gth_gas.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;

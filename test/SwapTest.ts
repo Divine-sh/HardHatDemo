@@ -44,6 +44,7 @@ describe("UniSwap contract Test", function () {
     console.log("My USDC Balance Before Swapping =", ethers.utils.formatUnits(MyUSDCBalanceBeforeSwapping, 6));
 
     let [reserve0, reserve1] = await lpContract.getReserves();
+    console.log(reserve0);
     const routerContract = new ethers.Contract(routerAddress, routerV2ABI, ethers.provider);
     let buyAmount = ethers.utils.parseUnits("200", 18);
     console.log(typeof buyAmount);
