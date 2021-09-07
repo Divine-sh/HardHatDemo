@@ -25,15 +25,15 @@ describe("UniSwap contract swapping in 1 step test", function () {
      *      再调用 swapExactETHForTokens 将 amountOut 个 USDC 转给目标用户。
      * */
 
-    let ethAmount = ethers.utils.parseUnits("1", 18);
+    const ethAmount = ethers.utils.parseUnits("1", 18);
     const [_, amountOut] = await router02Contract.getAmountsOut(ethAmount, [
       wethToken,
       usdcToken,
     ]);
     console.log("amountOut =", ethers.utils.formatUnits(amountOut, 6));
 
-    let timestamp = Math.round(new Date().getTime() / 1000) + 1000;
-    const fixedTimestamp = ethers.utils.parseUnits(`${timestamp}`);
+    const timestamp = Math.round(new Date().getTime() / 1000) + 1000;
+    const formattedTimestamp = ethers.utils.parseUnits(`${timestamp}`);
     const [signer] = await ethers.getSigners();
 
     const usdcContract = new ethers.Contract(
@@ -52,7 +52,7 @@ describe("UniSwap contract swapping in 1 step test", function () {
         amountOut,
         [wethToken, usdcToken],
         myETHAddress,
-        fixedTimestamp,
+        formattedTimestamp,
         { value: ethAmount }
       );
 
