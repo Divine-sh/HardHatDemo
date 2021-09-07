@@ -16,6 +16,8 @@ type libUnit = {
 }
 describe("UniSwap Gas Predict", function() {
 
+    const inputPath:string = './lpdata/white_eth.txt';
+    const outputPath:string = './lpdata/lp_gth_gas_no_depos.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -27,7 +29,7 @@ describe("UniSwap Gas Predict", function() {
     let totalGas: number[] = [];
     let lib: libUnit[] = [];
 
-    fs.readFile('./lpdata/white_eth.txt', function(err:ErrnoException,data:Buffer) {
+    fs.readFile(inputPath, function(err:ErrnoException,data:Buffer) {
         if(err) throw err;
         const arr = data.toString().replace(/\r\n/g,'\n').split('\n');
         let n = 0;
@@ -114,7 +116,8 @@ describe("UniSwap Gas Predict", function() {
                 let swap_res = await swap_trx.wait();
                 //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
                 // 6.统计gasUsed之和
-                let total_gasUsed = Number(deposit_res.gasUsed) + Number(transfer_res.gasUsed) + Number(swap_res.gasUsed);
+                //let total_gasUsed = Number(deposit_res.gasUsed) + Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //算上抵押的
+                let total_gasUsed = Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //不算抵押的
                 //totalGas[i] = Number(total_gasUsed);
                 console.log("","Total gasUsed: "+total_gasUsed,"");
                 lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
@@ -127,16 +130,14 @@ describe("UniSwap Gas Predict", function() {
                 lib[i].default = err.toString();
             }
             finally {
-                fs.writeFileSync('./lpdata/lpgas.json', JSON.stringify(lib, null, 4), 'utf-8');
+                fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
             }
         }
         console.log(lib.length);
         for (let j = 0; j < lib.length; j++)
             console.log(lib[j].lpAdd,lib[j].gasUsed);
 
-        fs.writeFileSync('./lpdata/lpgas.json', JSON.stringify(lib, null, 4), 'utf-8');
+        fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
 
     });
-
-
 });

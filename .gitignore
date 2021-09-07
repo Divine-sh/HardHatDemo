@@ -11,6 +11,7 @@ node_modules.nosync
 .env
 dist
 *.json
+!/lpdata/*.json
 .idea
 *.zip
 *.sh
