@@ -49,3 +49,44 @@ npm run test test/TokenTest.ts
 ```
 npm run test test/UniswapTest.ts
 ```
+
+
+# Uniswap: Swap tokens in 3 steps
+
+## Demo 作用
+
+ 	hardhat 环境下拥有 ETH 的用户 signer 通过将 WETH 兑换为 UNI ，再兑换为 USDC ，并将 USDC 转至目标用户。
+
+## 相关概念
+
+- **LP （ Liquidity Provider ）** : 流动资金提供者，类比银行
+- **signer** : 通过 hardhat 环境的第一个账户
+- **target user ( targetAddress / myETHAddress )** : 目标账户/待转入/接收的账户(合约)
+- **ERC20 tokens**: WETH, UNI, USDC
+
+## 步骤
+
+1. **抵押/存款（deposit） -> transfer**
+
+  ```typescript
+  await wethContract.connect(signer).deposit({ value: buyAmount });
+  await wethContract.connect(signer).transfer(lpAddress, buyAmount);
+  ```
+
+  
+
+2. **swap: WETH -> UNI**
+
+  ```typescript
+  await lpContract.connect(signer).swap(outAmount, 0, newLpAddress, []);
+  ```
+
+  
+
+3. **swap: UNI -> USDC -> myETHAddress**
+
+   ```typescript
+   await newLpContract.connect(signer).swap(0, outAmount, myETHAddress, [])
+   ```
+
+   
