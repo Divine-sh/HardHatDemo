@@ -1,3 +1,4 @@
+import configs from "../config";
 
 async function changeForkBlockV2(blockNumber:number){
   const hre = require("hardhat");
@@ -6,7 +7,8 @@ async function changeForkBlockV2(blockNumber:number){
     method: "hardhat_reset",
     params: [{
       forking: {
-        jsonRpcUrl: "https://eth-mainnet.alchemyapi.io/v2/rOoHfJirs6LdjKEeZvubWl8V72BQctGB",
+        // configs.ETH_r
+        jsonRpcUrl: configs.ETH_RPC,
         blockNumber: blockNumber
       }
     }]
