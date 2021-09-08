@@ -17,7 +17,7 @@ type libUnit = {
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_gth_gas.json';
+    const outputPath:string = './lpdata/lp_eth_gas.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -73,14 +73,14 @@ describe("UniSwap Gas Predict", function() {
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
         for (let i = 0; i < lpAdds.length; i++)
         {
-            //lpAddress = '0x2de99d4388280d25EE37b43B76e2b156fd2457A6';
             lpAddress = lpAdds[i];
+            //lpAddress = '0xd535dbf27942551A98Cd0723552BDAf70628DbF8';
             console.log("lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
             let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
 
-            // 2.lpContract.token0()，lpContract.token1()可以得到lp对应的两种token(token1是weth)
+            // 2.lpContract.token0()，lpContract.token1()可以得到lp对应的两种token
             let token0 = await lpContract.token0(); let token1 = await lpContract.token1();
 
             // 3.通过lpContract.getReserves()可以得到token0和token1的余额
@@ -101,7 +101,7 @@ describe("UniSwap Gas Predict", function() {
             //计算outAmount
             let outAmount = await uniRouter.getAmountOut(buyAmount,reserveIn,reserveOut);
             // let outAmount = await uniRouter.getAmountOut(buyAmount,reserve1,reserve0);
-            console.log("<outAmount of another token =", ethers.utils.formatUnits(outAmount, 6), ">\n");
+            console.log("<outAmount of another token =", ethers.utils.formatUnits(outAmount, 18), ">\n");
 
             let deposit_trx = await WETHContract.connect(owner).deposit({ value: buyAmount});
             let deposit_res = await deposit_trx.wait();
@@ -128,8 +128,7 @@ describe("UniSwap Gas Predict", function() {
                 lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].default = err.toString();
-            }
-            finally {
+            } finally {
                 fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
             }
         }

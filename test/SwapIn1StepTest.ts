@@ -9,11 +9,7 @@ describe("UniSwap contract swapping in 1 step test", function () {
 
   const myETHAddress = "0xB13908caBC896127C66241469AEfDd0372900927";
   const router02Address = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-  const router02Contract = new ethers.Contract(
-    router02Address,
-    routerV2ABI,
-    ethers.provider
-  );
+  const router02Contract = new ethers.Contract(router02Address, routerV2ABI, ethers.provider);
 
   beforeEach(async () => {});
 
@@ -26,26 +22,16 @@ describe("UniSwap contract swapping in 1 step test", function () {
      * */
 
     const ethAmount = ethers.utils.parseUnits("1", 18);
-    const [_, amountOut] = await router02Contract.getAmountsOut(ethAmount, [
-      wethToken,
-      usdcToken,
-    ]);
+    const [_, amountOut] = await router02Contract.getAmountsOut(ethAmount, [wethToken, usdcToken,]);
     console.log("amountOut =", ethers.utils.formatUnits(amountOut, 6));
 
     const timestamp = Math.round(new Date().getTime() / 1000) + 1000;
     const formattedTimestamp = ethers.utils.parseUnits(`${timestamp}`);
     const [signer] = await ethers.getSigners();
 
-    const usdcContract = new ethers.Contract(
-      usdcToken,
-      USDC_ABI,
-      ethers.provider
-    );
+    const usdcContract = new ethers.Contract(usdcToken, USDC_ABI, ethers.provider);
     let myUsdcBalance = await usdcContract.balanceOf(myETHAddress);
-    console.log(
-      "Before swapping, myUsdcBalance =",
-      ethers.utils.formatUnits(myUsdcBalance, 6)
-    );
+    console.log("Before swapping, myUsdcBalance =", ethers.utils.formatUnits(myUsdcBalance, 6));
 
     // amountOutMin: The minimum amount of output tokens that must be received for the transaction not to revert.
     const amountOutMin = ethers.utils.parseUnits("1000", 6);
@@ -60,9 +46,6 @@ describe("UniSwap contract swapping in 1 step test", function () {
       );
 
     myUsdcBalance = await usdcContract.balanceOf(myETHAddress);
-    console.log(
-      "After swapping, myUsdcBalance =",
-      ethers.utils.formatUnits(myUsdcBalance, 6)
-    );
+    console.log("After swapping, myUsdcBalance =", ethers.utils.formatUnits(myUsdcBalance, 6));
   });
 });
