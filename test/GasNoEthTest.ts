@@ -10,16 +10,18 @@ import {BigNumber} from "ethers";
 import {copyFileSync} from "fs";
 import {log} from "util";
 import {ERC20_ABI} from "../abis/ERC20";
+import {start} from "repl";
 const fs = require('fs');
 type libUnit = {
     lpAdd: string,
     gasUsed: number,
     default: string
 }
+
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_no_eth.txt';
-    const outputPath:string = './lpdata/lp_no_eth_gas_no_depos.json';
+    const outputPath:string = './lpdata/lp_no_eth_gas_no_depos2.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -47,6 +49,7 @@ describe("UniSwap Gas Predict", function() {
         //console.log(lpAdds.length);
     });
 
+
     beforeEach(async () => {
         //console.log(lpAdds.length);
         uniFactory = await utils.uniswapTools.getIUniswapFactory(UNI_FACTORY);
@@ -54,16 +57,19 @@ describe("UniSwap Gas Predict", function() {
 
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
+        const begin :number = 2693;
+        const end :number = lpAdds.length;
         const [owner] = await ethers.getSigners();
         let a :number = 3; //amount0需要除的值
         // 0.建立WETH合约实例和router合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
         const uniRouter = await new ethers.Contract(UNI_ROUTER, routerV2ABI, ethers.provider);
-        for (let i = 0; i < 1; i++)
+        for (let i = begin; i < end; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';
-            console.log("lp address is: ", lpAddress);
+            //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';
+            //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';//WETH_Token0_lpAddress全0
+            console.log(i,":lp address is: ", lpAddress);
 
             //一、确定amout0
             // 1.建立token0和token1的lp实例
@@ -73,8 +79,8 @@ describe("UniSwap Gas Predict", function() {
             let [reserve0, reserve1] = await lpContract.getReserves();
             console.log('token 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() );
             // console.log(typeof reserve0);console.log(Object.getOwnPropertyNames(reserve0));console.log(reserve0._isBigNumber);
-            // 3.确定amount0(此时无法确定，因为WETH/token0的lp可能没有这么多的token0，所以amount0 = Min(WETH/token0的lp的token0余额，lp的token0余额).div(a))
-            let amount00 :BigNumber = reserve0;
+            // 3.确定amount0(此时无法确定，因为WETH/token0的lp可能没有这么多的token0，所以amount0 = Min(WETH/token0的lp的token0余额，lp的token1余额对应的最大token0的量).div(a))
+            let amount00 = reserve0;//await uniRouter.getAmountIn(reserve1,reserve0,reserve1);
             console.log("\n<Reserve of token0 at lp =", amount00.toString(), ">");
 
             //二、交换得到数量为amount0的token0
@@ -83,7 +89,15 @@ describe("UniSwap Gas Predict", function() {
             console.log("Weth to Token0 lp address is: ", WETH_Token0_lpAddress);
             const WETH_Token0_lpContract = await utils.uniswapTools.getIUniswapV2Pair(WETH_Token0_lpAddress);
             // 2.确定amount0对应的weth数量（+1，防止小幅度的变化）
-            [reserve0, reserve1] = await WETH_Token0_lpContract.getReserves();
+            try { //WETH_Token0_lpAddress可能全0，创建的合约实例也是无效的
+                [reserve0, reserve1] = await WETH_Token0_lpContract.getReserves();
+            } catch(e){
+                console.log(e.toString());
+                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i].lpAdd = lpAddress;
+                lib[i].default = "Weth to Token0 lp address is: " + WETH_Token0_lpAddress;
+                continue;
+            }
             //得到WETH/token0的lp的token0的余额
             let tmpToken0 = await WETH_Token0_lpContract.token0(); let isWethToken0 :number; let amount01 :BigNumber;
             if (tmpToken0 == WETH) //WETH_Token0_lp的tokne0是WETH
@@ -96,7 +110,7 @@ describe("UniSwap Gas Predict", function() {
             if (x>y) amount0 = amount01;
             else amount0 = amount00;
             //确定amount0
-            amount0 = amount0.div(a);
+            if (Number(amount0.toString()) > a) amount0 = amount0.div(a);
             console.log("<Amount of token0 =", amount0.toString(), ">\n");
             //确定需要weth的数量
             let wethAmount :BigNumber;
@@ -155,10 +169,9 @@ describe("UniSwap Gas Predict", function() {
             }
 
         }
-        console.log(lib.length);
-        for (let j = 0; j < lib.length; j++)
+        console.log("lib.length: ",lib.length);
+        for (let j = begin; j < end; j++)
             console.log(lib[j].lpAdd,lib[j].gasUsed);
-
         fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
     });
 });
