@@ -11,9 +11,16 @@ function estimateLP(lp: lpAddress[]): BigNumber{
     {   //创建lp地址数组和gasUsed数组
         let lpAdds: string[] = [];
         let lpGas: number[] = [];
+        let unResolveLp: string[] = [];
         //读取文件内容，并转化为Json对象
         let lpEthGasJsonData = JSON.parse(fs.readFileSync(inputPath,"utf-8"));
-        for (let lpA of lpEthGasJsonData) { lpAdds.push(lpA.lpAdd); lpGas.push(lpA.gasUsed); }
+        for (let lpA of lpEthGasJsonData)
+        {
+            lpAdds.push(lpA.lpAdd); lpGas.push(lpA.gasUsed);
+            if (lpA.default != "success") unResolveLp.push(lpA);
+        }
+
+        fs.writeFileSync('./lpdata/unresolved.json', JSON.stringify(unResolveLp, null, 4), 'utf-8');
 
         for (let i = 0; i < lp.length; i++)
         {   //if (lpAdds.find(function (value,index,arr){ return (value === lp[i], index); }))

@@ -89,4 +89,9 @@ npm run test test/UniswapTest.ts
    await newLpContract.connect(signer).swap(0, outAmount, myETHAddress, [])
    ```
 
-   
+
+# Uniswap: Gas Estimate
+
+### 一般交易步骤：
+
+从自己的账户将weth transfer到lp，可能涉及多个token，中间lp通过swap，最后swap回到自己的账户
