@@ -4,7 +4,7 @@ const fs = require('fs');
 
 type lpAddress = string;
 type BigNumber = number;
-const inputPath:string = './lpdata/lp_all_gas_no_depos.json';
+const inputPath:string = './lpdata/lp_all_gas_info.json';
 function estimateLP(lp: lpAddress[]): BigNumber{
     let gasEstimated:number = 0;
     if (fs.existsSync(inputPath)) //判断是否存在此文件

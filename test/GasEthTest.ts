@@ -11,13 +11,16 @@ import {log} from "util";
 const fs = require('fs');
 type libUnit = {
     lpAdd: string,
-    gasUsed: number,
+    deposGas: number, //抵押eth的gas
+    transGas: number, //传送token到lp的gas
+    swapGas: number, //在lp上交换的gas
+    totalGas: number, //传送加交换的gas
     default: string
 }
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_eth_gas.json';
+    const outputPath:string = './lpdata/lp_eth_gas_info.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -75,7 +78,7 @@ describe("UniSwap Gas Predict", function() {
         {
             lpAddress = lpAdds[i];
             //lpAddress = '0xd535dbf27942551A98Cd0723552BDAf70628DbF8';
-            console.log("lp address is: ", lpAddress);
+            console.log(i,":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
             let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
@@ -85,7 +88,7 @@ describe("UniSwap Gas Predict", function() {
 
             // 3.通过lpContract.getReserves()可以得到token0和token1的余额
             let {blockTimestampLast, reserve0, reserve1} = await lpContract.getReserves();
-            console.log('\ntoken 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() ); console.log('blockTimestampLast', blockTimestampLast,"\n");
+            console.log('\ntoken 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() );
 
             // 4.确定buyAmount，计算outAmount，将buyAmount抵押并由WETHContract转到lpAddress账户
             let buyAmount = ethers.utils.parseUnits("1", 18);
@@ -120,22 +123,22 @@ describe("UniSwap Gas Predict", function() {
                 let total_gasUsed = Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //不算抵押的
                 //totalGas[i] = Number(total_gasUsed);
                 console.log("","Total gasUsed: "+total_gasUsed,"");
-                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i] = {lpAdd:"",deposGas:-1,transGas:-1,swapGas:-1,totalGas:-1,default:"success"};
                 lib[i].lpAdd = lpAddress;
-                lib[i].gasUsed = Number(total_gasUsed);
+                lib[i].deposGas = Number(deposit_res.gasUsed);
+                lib[i].transGas = Number(transfer_res.gasUsed);
+                lib[i].swapGas = Number(swap_res.gasUsed);
+                lib[i].totalGas = Number(total_gasUsed);
             } catch (err) {
                 //console.log(err.toString());
-                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i] = {lpAdd:"",deposGas:-1,transGas:-1,swapGas:-1,totalGas:-1,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].default = err.toString();
             } finally {
                 fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
             }
         }
-        console.log(lib.length);
-        for (let j = 0; j < lib.length; j++)
-            console.log(lib[j].lpAdd,lib[j].gasUsed);
-
+        console.log("lib.length",lib.length);
         fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
 
     });

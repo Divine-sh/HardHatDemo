@@ -1,0 +1,954 @@
+[
+    {
+        "lpAdd": "0x03C4Aa639d76Ad4e9A4558D82860C1789d990007",
+        "deposGas": -2,
+        "transGas": 29582,
+        "swapGas": 102593,
+        "totalGas": 132175,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3EE7Dc29293935b474dF93878592D01F82B76dC9",
+        "deposGas": -2,
+        "transGas": 29941,
+        "swapGas": 85822,
+        "totalGas": 115763,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x8F190eDeFBB2A597572bf21f3F73469636Aa59b1",
+        "deposGas": -2,
+        "transGas": 29908,
+        "swapGas": 85439,
+        "totalGas": 115347,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x763A9e85Eb91b5A277A641F14AE19e09B0FC0E8D",
+        "deposGas": -2,
+        "transGas": 35306,
+        "swapGas": 90899,
+        "totalGas": 126205,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x0D88ba937A8492AE235519334Da954EbA73625dF",
+        "deposGas": -2,
+        "transGas": 29951,
+        "swapGas": 93611,
+        "totalGas": 123562,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x876e31e08fAA5f69122e7595b347BF3fdB73946c",
+        "deposGas": -2,
+        "transGas": 32163,
+        "swapGas": 90668,
+        "totalGas": 122831,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x82b1506Cc8c184b256cdE4430ae68C2e49a8673C",
+        "deposGas": -2,
+        "transGas": 29671,
+        "swapGas": 90600,
+        "totalGas": 120271,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x9Ab32555Bf5A51C922aeE7D2e7c41b2ecf798863",
+        "deposGas": -2,
+        "transGas": 29721,
+        "swapGas": 168740,
+        "totalGas": 198461,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x652BD4d7DaA00A690Abf404837ca0d163209d66E",
+        "deposGas": -2,
+        "transGas": 29930,
+        "swapGas": 85812,
+        "totalGas": 115742,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x51F5953659e7d63CF0EF60B8674eF819c225169e",
+        "deposGas": -2,
+        "transGas": 54477,
+        "swapGas": 108027,
+        "totalGas": 162504,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xB154F74E32ef89a7FaEc16F7FF3281C897dd25d2",
+        "deposGas": -2,
+        "transGas": 29949,
+        "swapGas": 105377,
+        "totalGas": 135326,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x7B26e55D2Fe62e4Df274882BB6B9bc74E1ce4D09",
+        "deposGas": -2,
+        "transGas": 29564,
+        "swapGas": 88191,
+        "totalGas": 117755,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5521950154F5E0e0E980763e5A515719B14A8EB7",
+        "deposGas": -2,
+        "transGas": 46109,
+        "swapGas": 93445,
+        "totalGas": 139554,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x6059eD08e17a66d6e53C64A4e60cde06C4FE9C2B",
+        "deposGas": -2,
+        "transGas": 29814,
+        "swapGas": 90941,
+        "totalGas": 120755,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x819De42D3AB832Eaf7111a222a8A5A7419f13b48",
+        "deposGas": -2,
+        "transGas": 35283,
+        "swapGas": 88679,
+        "totalGas": 123962,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x4AE7a9e5Cd73Bb3D886febCD3E33A60e9F354Be3",
+        "deposGas": -2,
+        "transGas": 48513,
+        "swapGas": 116527,
+        "totalGas": 165040,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3fB28821Cd57161569298963A2CeedB1C4c4DA0e",
+        "deposGas": -2,
+        "transGas": 30217,
+        "swapGas": 85501,
+        "totalGas": 115718,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3AdA019e873601D1998Cc12F174131287247Ded6",
+        "deposGas": -2,
+        "transGas": 29736,
+        "swapGas": 90782,
+        "totalGas": 120518,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x31CA22FB5cE41AaE3D006D3e98D01bd4649d59BA",
+        "deposGas": -2,
+        "transGas": 35234,
+        "swapGas": 90623,
+        "totalGas": 125857,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x30e7e1989cf774726Dd9F4780CAB42D5558003E6",
+        "deposGas": -2,
+        "transGas": 29460,
+        "swapGas": 95209,
+        "totalGas": 124669,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3BF94529f40C7cAbE0151C0e10C14a8b9a57B297",
+        "deposGas": -2,
+        "transGas": 48537,
+        "swapGas": 97700,
+        "totalGas": 146237,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xeA7952FAC7Ff6e997d895C1566599b86b91444C0",
+        "deposGas": -2,
+        "transGas": 34754,
+        "swapGas": 101191,
+        "totalGas": 135945,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x9F678870D0060cbC5fE3AFC5BcD702B0Ad8CCD8a",
+        "deposGas": -2,
+        "transGas": 34658,
+        "swapGas": 105584,
+        "totalGas": 140242,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x518d6CE2D7A689A591Bf46433443C31615b206C5",
+        "deposGas": -2,
+        "transGas": 32487,
+        "swapGas": 99286,
+        "totalGas": 131773,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xDb45de0A6e52A379924A355E6c5137B95D9C3806",
+        "deposGas": -2,
+        "transGas": 32990,
+        "swapGas": 88548,
+        "totalGas": 121538,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x098B701774fB4d84621f15a084891E1E4058fF98",
+        "deposGas": -2,
+        "transGas": 30201,
+        "swapGas": 91328,
+        "totalGas": 121529,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x6CaA616C0cB8aeb7fa14233d6BDde13d582c94aD",
+        "deposGas": -2,
+        "transGas": 32116,
+        "swapGas": 91118,
+        "totalGas": 123234,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x247103dE3B8b256560799b8F9b582C616b6b8B14",
+        "deposGas": -2,
+        "transGas": 29987,
+        "swapGas": 90393,
+        "totalGas": 120380,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xf1BbCC43B45F455D3dB2fF594d5C9fd5c579A22D",
+        "deposGas": -2,
+        "transGas": 48525,
+        "swapGas": 104833,
+        "totalGas": 153358,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xb533193c117920251B3A116e9c86c5347d67a6e6",
+        "deposGas": -2,
+        "transGas": 35330,
+        "swapGas": 90913,
+        "totalGas": 126243,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xb96344828899C4903Bb3ADC34C68BFD4A302aDfb",
+        "deposGas": -2,
+        "transGas": 29896,
+        "swapGas": 73792,
+        "totalGas": 103688,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x57d96fC6573E125492caB7F522A553C3d8E1d03E",
+        "deposGas": -2,
+        "transGas": 46085,
+        "swapGas": 93908,
+        "totalGas": 139993,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xEeab1e74C85f0D98B7968E82dfC0821FCb0E5D6D",
+        "deposGas": -2,
+        "transGas": 29896,
+        "swapGas": 118713,
+        "totalGas": 148609,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x79D4Eaa5768a4A71727bdb35eAE5148991a6551E",
+        "deposGas": -2,
+        "transGas": 97221,
+        "swapGas": 85597,
+        "totalGas": 182818,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x79CDa9b30AD6775Aa50A76dab2371dA7cb1E3710",
+        "deposGas": -2,
+        "transGas": 32421,
+        "swapGas": 91051,
+        "totalGas": 123472,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xb1d385EfC681c52946cb8815B091eb822a0fB603",
+        "deposGas": -2,
+        "transGas": 29977,
+        "swapGas": 90984,
+        "totalGas": 120961,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x7f0AD87B99bA16E6e651120c2E230cF6928c3d15",
+        "deposGas": -2,
+        "transGas": 32045,
+        "swapGas": 90580,
+        "totalGas": 122625,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5F80A84aFb9dC3C097b8862bD9c5f8D7118bD85C",
+        "deposGas": -2,
+        "transGas": 34730,
+        "swapGas": 95484,
+        "totalGas": 130214,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xD8b4CBCbb768088B9ea39b65e9533f481711d127",
+        "deposGas": -2,
+        "transGas": 29966,
+        "swapGas": 88773,
+        "totalGas": 118739,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5a1ABc007f031Aa58238f45941D965cE6892FDfF",
+        "deposGas": -2,
+        "transGas": -2,
+        "swapGas": -2,
+        "totalGas": -2,
+        "default": "Weth to Token0 lp address is: 0x0000000000000000000000000000000000000000"
+    },
+    {
+        "lpAdd": "0xD93269d3EAaA3C6Fe16b32ffe37E3194Cb54a820",
+        "deposGas": -2,
+        "transGas": 29778,
+        "swapGas": 85361,
+        "totalGas": 115139,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x16AB328DF4056d1dE1E623a0b8De7C183C1Bf3a6",
+        "deposGas": -2,
+        "transGas": 30252,
+        "swapGas": 96616,
+        "totalGas": 126868,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x03b0250A420b4a1C2a058BE85D38a5afCFfEDa35",
+        "deposGas": -2,
+        "transGas": 49570,
+        "swapGas": 99745,
+        "totalGas": 149315,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xbF706E6852059638d547114659c66Bad04463278",
+        "deposGas": -2,
+        "transGas": 32140,
+        "swapGas": 73960,
+        "totalGas": 106100,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x0F0149D68dDdb2868A66e78bB87a924C2Fc4F8BB",
+        "deposGas": -2,
+        "transGas": 29437,
+        "swapGas": 91252,
+        "totalGas": 120689,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x2DF43f85e033129F0A873CC746eDAb264fFc8c3a",
+        "deposGas": -2,
+        "transGas": 42089,
+        "swapGas": 83338,
+        "totalGas": 125427,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x153Cf4b8dcC954CC531f92A9B50b9e851C536f24",
+        "deposGas": -2,
+        "transGas": 32140,
+        "swapGas": 91115,
+        "totalGas": 123255,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x7c7fd81588ffF0587EeD72205F0A76e4489E29d7",
+        "deposGas": -2,
+        "transGas": 32463,
+        "swapGas": 85603,
+        "totalGas": 118066,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x90601c8588a7Cbd9eE6A09c26837c0C3dEd73aea",
+        "deposGas": -2,
+        "transGas": 31753,
+        "swapGas": 125024,
+        "totalGas": 156777,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x964C21C772D11f8218AC8518bF9E0C747Cf0FF55",
+        "deposGas": -2,
+        "transGas": 29836,
+        "swapGas": 90562,
+        "totalGas": 120398,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x73b1183940297cE6ecb772ae9CEdaCa7fCDc30a5",
+        "deposGas": -2,
+        "transGas": -2,
+        "swapGas": -2,
+        "totalGas": -2,
+        "default": "Weth to Token0 lp address is: 0x0000000000000000000000000000000000000000"
+    },
+    {
+        "lpAdd": "0x063c1c82328dA1333B185e556d15E6B8A2cbaA2a",
+        "deposGas": -2,
+        "transGas": 29995,
+        "swapGas": 88386,
+        "totalGas": 118381,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xAb9B27076e073F9f7212B5B5E865CDbd5209aCEa",
+        "deposGas": -2,
+        "transGas": 32499,
+        "swapGas": 91098,
+        "totalGas": 123597,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xD5b593F5D6055d0d887FDd6EFa121feaf68Bd1af",
+        "deposGas": -2,
+        "transGas": 104802,
+        "swapGas": 91699,
+        "totalGas": 196501,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x956DA493eAf640418E96483AC21926904EECD7d4",
+        "deposGas": -2,
+        "transGas": 29587,
+        "swapGas": 96603,
+        "totalGas": 126190,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xaF2794096Fa6900D1F354b50E4FE5c4582011F95",
+        "deposGas": -2,
+        "transGas": 30009,
+        "swapGas": 91014,
+        "totalGas": 121023,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xF5058Ca2bee0FEAb76B69503d428c617aA44Eb49",
+        "deposGas": -2,
+        "transGas": 32653,
+        "swapGas": 85754,
+        "totalGas": 118407,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x7a1Bb83A28203636F1cd75B6Fac54d4a8dff0F50",
+        "deposGas": -2,
+        "transGas": 29703,
+        "swapGas": 90689,
+        "totalGas": 120392,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xfE82528E2E0a071b5e1f1FE65871Bc9062411D18",
+        "deposGas": -2,
+        "transGas": 48513,
+        "swapGas": 95013,
+        "totalGas": 143526,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x00A1E325d7BC9172c0B858C5526342439c3D0A76",
+        "deposGas": -2,
+        "transGas": -2,
+        "swapGas": -2,
+        "totalGas": -2,
+        "default": "Weth to Token0 lp address is: 0x0000000000000000000000000000000000000000"
+    },
+    {
+        "lpAdd": "0x73Fb253681C2a2F11C9D5C8e731bE44A3F46B353",
+        "deposGas": -2,
+        "transGas": 52244,
+        "swapGas": 92014,
+        "totalGas": 144258,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xED9Ca2A60d683c9ba04FD2Bc043AAd76A0afC59F",
+        "deposGas": -2,
+        "transGas": 34754,
+        "swapGas": 98974,
+        "totalGas": 133728,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x8047694d9Bc6708a680aFBF46e442B03824b9fA9",
+        "deposGas": -2,
+        "transGas": 32475,
+        "swapGas": 93355,
+        "totalGas": 125830,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x0865b9C7Cd9aa9F0e9F61E96C11e524145b70550",
+        "deposGas": -2,
+        "transGas": 97717,
+        "swapGas": 99205,
+        "totalGas": 196922,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x139B6a7C65D40a71E7281223ffCFcA9446C1A816",
+        "deposGas": -2,
+        "transGas": 179381,
+        "swapGas": 113777,
+        "totalGas": 293158,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x9F319E265b8189B5b5C2152cAcc791b95b3Da180",
+        "deposGas": -2,
+        "transGas": 34564,
+        "swapGas": 90758,
+        "totalGas": 125322,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x938Af9DE4Fe7Fd683F9eDf29E12457181E01Ca46",
+        "deposGas": -2,
+        "transGas": 29729,
+        "swapGas": 90581,
+        "totalGas": 120310,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xA3B69803CbaC30c07D8C827373427Ac9B19FfE3f",
+        "deposGas": -2,
+        "transGas": 37058,
+        "swapGas": 85580,
+        "totalGas": 122638,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xeAec8A8638BEC2A83A92E8eB30EE09Cbf4e6CfF1",
+        "deposGas": -2,
+        "transGas": 37013,
+        "swapGas": 86292,
+        "totalGas": 123305,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xea7f7bDc13d65D0B2BE40670ceA045a7C16eA879",
+        "deposGas": -2,
+        "transGas": 32508,
+        "swapGas": 91293,
+        "totalGas": 123801,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x514906FC121c7878424a5C928cad1852CC545892",
+        "deposGas": -2,
+        "transGas": 29786,
+        "swapGas": 88239,
+        "totalGas": 118025,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x261961be72CD4153Fe57AB11E46219FA9aC967f7",
+        "deposGas": -2,
+        "transGas": 34742,
+        "swapGas": 186025,
+        "totalGas": 220767,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x073966C1c1e362B0ec443a2582040226a6F8c689",
+        "deposGas": -2,
+        "transGas": 30070,
+        "swapGas": 92986,
+        "totalGas": 123056,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xC6f4915B82FE37374D4c9354dE0b2D55f6290792",
+        "deposGas": -2,
+        "transGas": 29919,
+        "swapGas": 90861,
+        "totalGas": 120780,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x0AaAB08cd4D4471DdA1450aaC2f2F9372E3F781A",
+        "deposGas": -2,
+        "transGas": 34759,
+        "swapGas": 93566,
+        "totalGas": 128325,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x482fE89e7641053F9209CF0592E5dD95D4DCFD7a",
+        "deposGas": -2,
+        "transGas": 34270,
+        "swapGas": 90753,
+        "totalGas": 125023,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5d311A46FE89EE41368EDD7Af612d7B8A9e2Cb04",
+        "deposGas": -2,
+        "transGas": 29979,
+        "swapGas": 74118,
+        "totalGas": 104097,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x4cE18bBe09AF25b4A88A4a9cd7c68E44248956f5",
+        "deposGas": -2,
+        "transGas": 29727,
+        "swapGas": 91124,
+        "totalGas": 120851,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xF0B048102001f3eDeEf4a1c3cf41940DE0035a25",
+        "deposGas": -2,
+        "transGas": 29800,
+        "swapGas": 91884,
+        "totalGas": 121684,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x43D49fBeeeDA2efCC2d95B3B2a2Fa2488c374a93",
+        "deposGas": -2,
+        "transGas": 29611,
+        "swapGas": 240991,
+        "totalGas": 270602,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x470459eE1Ce436640A1739a3971c3605F483ca7a",
+        "deposGas": -2,
+        "transGas": 34694,
+        "swapGas": 90615,
+        "totalGas": 125309,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x8FcD8221091acd8048f872b2DB73Ee8Dc9d2499a",
+        "deposGas": -2,
+        "transGas": 29917,
+        "swapGas": 90774,
+        "totalGas": 120691,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x897Ff428e8e47a6473D30392092F03c119b0dBA8",
+        "deposGas": -2,
+        "transGas": 30496,
+        "swapGas": 91609,
+        "totalGas": 122105,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xA1F55f6221E54B54594A00EEc63920852675ec21",
+        "deposGas": -2,
+        "transGas": 30067,
+        "swapGas": 73836,
+        "totalGas": 103903,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3E3129A0cea6268fd4A82075eC76d0F3e96a2bdd",
+        "deposGas": -2,
+        "transGas": 29911,
+        "swapGas": 85663,
+        "totalGas": 115574,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x4edC6E446a551Ed9b5a9C490fcb3bFdE04eacB1e",
+        "deposGas": -2,
+        "transGas": 34742,
+        "swapGas": 90835,
+        "totalGas": 125577,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xf0F7C5337Cb2e0e8B5bC374ee05a4966309F3072",
+        "deposGas": -2,
+        "transGas": 34730,
+        "swapGas": 91044,
+        "totalGas": 125774,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x8AEe249e0BA59BE970BA41FeDf70E57Ad5cdF420",
+        "deposGas": -2,
+        "transGas": 35342,
+        "swapGas": 85717,
+        "totalGas": 121059,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x896679921D2c9e0696D8C9cF2AFfCfb67FDAE806",
+        "deposGas": -2,
+        "transGas": 32499,
+        "swapGas": 90945,
+        "totalGas": 123444,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xEA730a0e923125BaD17378E9fD9d80d038753ad8",
+        "deposGas": -2,
+        "transGas": 30016,
+        "swapGas": 90512,
+        "totalGas": 120528,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xeA03b1de3c00cBffa832FA49ad0625a7316c02b9",
+        "deposGas": -2,
+        "transGas": 29938,
+        "swapGas": 90527,
+        "totalGas": 120465,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5A0D06a1c5196e4FEA49284c86f0320f13e11B77",
+        "deposGas": -2,
+        "transGas": 45945,
+        "swapGas": 92711,
+        "totalGas": 138656,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xa85BeA5754A8DFC701c98ccC01997dDBdd12690f",
+        "deposGas": -2,
+        "transGas": 29835,
+        "swapGas": 73557,
+        "totalGas": 103392,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xa1F52F7b0877d23571EbfA027F11db50AbE03014",
+        "deposGas": -2,
+        "transGas": 34579,
+        "swapGas": 90771,
+        "totalGas": 125350,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x888759CB22cEDaDF2cFb0049b03309D45aa380D9",
+        "deposGas": -2,
+        "transGas": 29835,
+        "swapGas": 93592,
+        "totalGas": 123427,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x653780E77d4C4166BB5D0197d26f6A335F49141a",
+        "deposGas": -2,
+        "transGas": 32055,
+        "swapGas": 81596,
+        "totalGas": 113651,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x9Be3A8E24F757371e9Ff8BAec6138732Ee1c1c3a",
+        "deposGas": -2,
+        "transGas": 30376,
+        "swapGas": 88616,
+        "totalGas": 118992,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x561f5126c16d0693065a12F4e1A5050139bA81FF",
+        "deposGas": -2,
+        "transGas": 31871,
+        "swapGas": 85449,
+        "totalGas": 117320,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
+        "deposGas": -2,
+        "transGas": 34766,
+        "swapGas": 88385,
+        "totalGas": 123151,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x2fE250c81f5980b054Bbd3A440E240189CffaF6f",
+        "deposGas": -2,
+        "transGas": 34581,
+        "swapGas": 91120,
+        "totalGas": 125701,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x3A1B4f6Dce585eF469a5DAA73A6EB87ce13E859D",
+        "deposGas": -2,
+        "transGas": 48525,
+        "swapGas": 148825,
+        "totalGas": 197350,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xcae8d962777D7cEE3573Abc2595F34CA27cCf458",
+        "deposGas": -2,
+        "transGas": 29801,
+        "swapGas": 85410,
+        "totalGas": 115211,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x878B76a1A0dA1BE6f7b02E1aBb5EE47380817362",
+        "deposGas": -2,
+        "transGas": 38625,
+        "swapGas": 90515,
+        "totalGas": 129140,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x662532cEce41d47CA05649735895ae206AC7bA2b",
+        "deposGas": -2,
+        "transGas": 41691,
+        "swapGas": 85411,
+        "totalGas": 127102,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xCd9652F006EFDE64f07030F10A1945EAD8AC1855",
+        "deposGas": -2,
+        "transGas": 29941,
+        "swapGas": 90673,
+        "totalGas": 120614,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xc6e8AcAFa5802C6139857B7D52B48C87F1A85da6",
+        "deposGas": -2,
+        "transGas": 30070,
+        "swapGas": 91243,
+        "totalGas": 121313,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xb1A6876ad98FBA649a66BE916559039ABdD3DBbe",
+        "deposGas": -2,
+        "transGas": 29980,
+        "swapGas": 90821,
+        "totalGas": 120801,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x27280d9E63234cdee3290FAd9670615b87C501d0",
+        "deposGas": -2,
+        "transGas": 34742,
+        "swapGas": 91086,
+        "totalGas": 125828,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x34B83c68739693f5a5b39d35e9048bC5957Db99C",
+        "deposGas": -2,
+        "transGas": 34658,
+        "swapGas": 90933,
+        "totalGas": 125591,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x23e0240aEd67e6224e46e4ae69344Fe1497771F2",
+        "deposGas": -2,
+        "transGas": 30061,
+        "swapGas": 124559,
+        "totalGas": 154620,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xfAcBB85f358dA1Fa1aC746cb980743e73B21bc76",
+        "deposGas": -2,
+        "transGas": 35318,
+        "swapGas": 74605,
+        "totalGas": 109923,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x072B999FC3D82f9ea08B8AdbB9D63a980FF2b14D",
+        "deposGas": -2,
+        "transGas": 34712,
+        "swapGas": 88729,
+        "totalGas": 123441,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x29e05b93C2074592727Cdc954b202E58C1A6B059",
+        "deposGas": -2,
+        "transGas": 34324,
+        "swapGas": 90571,
+        "totalGas": 124895,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x513D5F1DF52Eb1b70fFe6b89f3685920Fc6C5d89",
+        "deposGas": -2,
+        "transGas": 29727,
+        "swapGas": 74016,
+        "totalGas": 103743,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x64EC8503585817E64c8a82e41D3f63B4eC52820f",
+        "deposGas": -2,
+        "transGas": 124329,
+        "swapGas": 82499,
+        "totalGas": 206828,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x75efb257E07C14A64a010dA352b12F9CACD8E483",
+        "deposGas": -2,
+        "transGas": 91856,
+        "swapGas": 100952,
+        "totalGas": 192808,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xb2aa61b5bF5Da7b39404A89D20FD9CF10076B77D",
+        "deposGas": -2,
+        "transGas": 30031,
+        "swapGas": 88350,
+        "totalGas": 118381,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0xEaE384b95c1bA9A3062a25EEBE95436646F86ca4",
+        "deposGas": -2,
+        "transGas": 73717,
+        "swapGas": 95537,
+        "totalGas": 169254,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x5285D4ea883dbFb753487e1881DB6457c4c227e5",
+        "deposGas": -2,
+        "transGas": 29715,
+        "swapGas": 224386,
+        "totalGas": 254101,
+        "default": "success"
+    }
+]

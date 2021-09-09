@@ -94,4 +94,16 @@ npm run test test/UniswapTest.ts
 
 ### 一般交易步骤：
 
-从自己的账户将weth transfer到lp，可能涉及多个token，中间lp通过swap，最后swap回到自己的账户
+##### 从自己的账户将weth transfer到lp，可能涉及多个token，中间lp通过swap，最后swap回到自己的账户，实现套利.
+
+> 例如: 一笔交易涉及到WETH、token1、token2三种代币
+
+交易流程一般为:
+①**WETH**转到**WETH/TOKEN1 LP**
+②在**WETH/token1 LP**将 **WETH** 换成 **token1**
+    **换出的token1**直接转出到**token1/token2 LP**
+③在**WETH/token2 LP**将 **token1** 换成 **token2**
+    **换出的token2**直接转出回**原账户**
+
+> 所以整个过程涉及到了WETH的transfer，LP1的swap和LP2的swap
+

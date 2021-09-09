@@ -14,14 +14,17 @@ import {start} from "repl";
 const fs = require('fs');
 type libUnit = {
     lpAdd: string,
-    gasUsed: number,
+    deposGas: number, //抵押eth的gas
+    transGas: number, //传送token到lp的gas
+    swapGas: number, //在lp上交换的gas
+    totalGas: number, //传送加交换的gas
     default: string
 }
 
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_no_eth.txt';
-    const outputPath:string = './lpdata/lp_no_eth_gas_no_depos2.json';
+    const outputPath:string = './lpdata/lp_no_eth_gas_info.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -57,7 +60,7 @@ describe("UniSwap Gas Predict", function() {
 
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
-        const begin :number = 2693;
+        const begin :number = 0;
         const end :number = lpAdds.length;
         const [owner] = await ethers.getSigners();
         let a :number = 3; //amount0需要除的值
@@ -93,7 +96,7 @@ describe("UniSwap Gas Predict", function() {
                 [reserve0, reserve1] = await WETH_Token0_lpContract.getReserves();
             } catch(e){
                 console.log(e.toString());
-                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].default = "Weth to Token0 lp address is: " + WETH_Token0_lpAddress;
                 continue;
@@ -156,12 +159,14 @@ describe("UniSwap Gas Predict", function() {
 
                 let total_gasUsed = Number(token0_transfer_res.gasUsed) + Number(swap1_res.gasUsed);
                 console.log("","total gasUsed: "+total_gasUsed,"");
-                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
                 lib[i].lpAdd = lpAddress;
-                lib[i].gasUsed = Number(total_gasUsed);
+                lib[i].transGas = Number(token0_transfer_res.gasUsed);
+                lib[i].swapGas = Number(swap1_res.gasUsed);
+                lib[i].totalGas = Number(total_gasUsed);
             } catch (err) {
                 //console.log(err.toString());
-                lib[i] = {lpAdd:"",gasUsed:-1,default:"success"};
+                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].default = err.toString();
             } finally {
@@ -170,8 +175,6 @@ describe("UniSwap Gas Predict", function() {
 
         }
         console.log("lib.length: ",lib.length);
-        for (let j = begin; j < end; j++)
-            console.log(lib[j].lpAdd,lib[j].gasUsed);
         fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
     });
 });
