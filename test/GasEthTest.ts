@@ -36,7 +36,8 @@ describe("UniSwap Gas Predict", function() {
         if(err) throw err;
         const arr = data.toString().replace(/\r\n/g,'\n').split('\n');
         let n = 0;
-        for(let i of arr) {
+        for(let i of arr)
+        {
             n++;
             if(i.length != 0)
             {
@@ -77,7 +78,7 @@ describe("UniSwap Gas Predict", function() {
         for (let i = 0; i < lpAdds.length; i++)
         {
             lpAddress = lpAdds[i];
-            //lpAddress = '0xd535dbf27942551A98Cd0723552BDAf70628DbF8';
+            lpAddress = '0xA378703ec97e79E1eC25512186f3fc479d95871E';
             console.log(i,":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
@@ -85,6 +86,10 @@ describe("UniSwap Gas Predict", function() {
 
             // 2.lpContract.token0()，lpContract.token1()可以得到lp对应的两种token
             let token0 = await lpContract.token0(); let token1 = await lpContract.token1();
+            //判断token0和token1哪个是WETH并用isWethToken0表示
+            let isWethToken0 :number;
+            if (token0 == WETH) { console.log("lp的tokne0是WETH"); isWethToken0 = 1;}
+            else { console.log("lp的tokne1是WETH"); isWethToken0 = 0;}
 
             // 3.通过lpContract.getReserves()可以得到token0和token1的余额
             let {blockTimestampLast, reserve0, reserve1} = await lpContract.getReserves();
@@ -97,7 +102,7 @@ describe("UniSwap Gas Predict", function() {
             //function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut);
             // 判断reserveIn和reserveOut
             let reserveIn,reserveOut;
-            if (token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
+            if (isWethToken0 == 1)
                 {reserveIn = reserve0; reserveOut = reserve1;}
             else
                 {reserveIn = reserve1; reserveOut = reserve0;}
@@ -109,13 +114,17 @@ describe("UniSwap Gas Predict", function() {
             let deposit_trx = await WETHContract.connect(owner).deposit({ value: buyAmount});
             let deposit_res = await deposit_trx.wait();
             //console.log("","deposit gasUsed: "+deposit_res.gasUsed,"");
-
             let transfer_trx = await WETHContract.connect(owner).transfer(lpAddress, buyAmount);
             let transfer_res = await transfer_trx.wait();
             //console.log("","transfer gasUsed: "+transfer_res.gasUsed,"");
+
             // 5.调用lp合约的swap函数进行交换
             try {
-                let swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);
+                let swap_trx;
+                if (isWethToken0 == 1)
+                { swap_trx = await lpContract.connect(owner).swap(0, outAmount, owner.address, []);}
+                else
+                { swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);}
                 let swap_res = await swap_trx.wait();
                 //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
                 // 6.统计gasUsed之和
