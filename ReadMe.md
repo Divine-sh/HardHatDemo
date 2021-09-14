@@ -107,3 +107,12 @@ npm run test test/UniswapTest.ts
 
 > 所以整个过程涉及到了WETH的transfer，LP1的swap和LP2的swap
 
+#### 注意：
+
+1.在本地运行，每调用一次合约函数就需要一次call，但是以太坊上只需要一次；
+
+2.在本地运行，每调用一次合约函数还需要inputdata*16
+
+swap函数：inputdata === 330
+
+transfer函数：inputdata === 138

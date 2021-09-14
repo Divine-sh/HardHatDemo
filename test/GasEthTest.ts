@@ -9,18 +9,11 @@ import ErrnoException = NodeJS.ErrnoException;
 import {copyFileSync} from "fs";
 import {log} from "util";
 const fs = require('fs');
-type libUnit = {
-    lpAdd: string,
-    deposGas: number, //抵押eth的gas
-    transGas: number, //传送token到lp的gas
-    swapGas: number, //在lp上交换的gas
-    totalGas: number, //传送加交换的gas
-    default: string
-}
+import {libUnit} from "../abis/type_libUnit";
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_eth_gas_info.json';
+    const outputPath:string = './lpdata/lp_test.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -75,10 +68,10 @@ describe("UniSwap Gas Predict", function() {
         const [owner] = await ethers.getSigners();
         // 0.建立WETH合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-        for (let i = 0; i < lpAdds.length; i++)
+        for (let i = 0; i < 1; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0xA378703ec97e79E1eC25512186f3fc479d95871E';
+            lpAddress = '0x69bEd2a194eE003Dad10306FBe937cFF3272eD0B';
             console.log(i,":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
@@ -113,10 +106,11 @@ describe("UniSwap Gas Predict", function() {
 
             let deposit_trx = await WETHContract.connect(owner).deposit({ value: buyAmount});
             let deposit_res = await deposit_trx.wait();
-            //console.log("","deposit gasUsed: "+deposit_res.gasUsed,"");
+            console.log("","deposit gasUsed: "+deposit_res.gasUsed,"");
             let transfer_trx = await WETHContract.connect(owner).transfer(lpAddress, buyAmount);
+            //console.log("---------",transfer_trx,"------------");
             let transfer_res = await transfer_trx.wait();
-            //console.log("","transfer gasUsed: "+transfer_res.gasUsed,"");
+            console.log("","transfer gasUsed: "+transfer_res.gasUsed,"");
 
             // 5.调用lp合约的swap函数进行交换
             try {
@@ -126,9 +120,9 @@ describe("UniSwap Gas Predict", function() {
                 else
                 { swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);}
                 let swap_res = await swap_trx.wait();
+                //console.log("\n--------\n",swap_res,"\n---------\n");
                 //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
                 // 6.统计gasUsed之和
-                //let total_gasUsed = Number(deposit_res.gasUsed) + Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //算上抵押的
                 let total_gasUsed = Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //不算抵押的
                 //totalGas[i] = Number(total_gasUsed);
                 console.log("","Total gasUsed: "+total_gasUsed,"");

@@ -12,19 +12,12 @@ import {log} from "util";
 import {ERC20_ABI} from "../abis/ERC20";
 import {start} from "repl";
 const fs = require('fs');
-type libUnit = {
-    lpAdd: string,
-    deposGas: number, //抵押eth的gas
-    transGas: number, //传送token到lp的gas
-    swapGas: number, //在lp上交换的gas
-    totalGas: number, //传送加交换的gas
-    default: string
-}
+import {libUnit} from "../abis/type_libUnit";
 
 describe("UniSwap Gas Predict", function() {
 
-    const inputPath:string = './lpdata/white_no_eth.txt';
-    const outputPath:string = './lpdata/lp_unresove_gas_info.json';
+    const inputPath: string = './lpdata/white_no_eth.txt';
+    const outputPath: string = './lpdata/lp_test.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -61,7 +54,7 @@ describe("UniSwap Gas Predict", function() {
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
         const begin :number = 0;
-        const end :number = lpAdds.length;
+        const end :number = 1;//lpAdds.length;
         const [owner] = await ethers.getSigners();
         let a :number = 3; //amount0需要除的值
         // 0.建立WETH合约实例和router合约实例
@@ -70,7 +63,7 @@ describe("UniSwap Gas Predict", function() {
         for (let i = begin; i < end; i++)
         {
             lpAddress = lpAdds[i];
-            //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';
+            lpAddress = '0x79e0d4858af8071349469b6589a3c23c1fe1586e';
             //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';//WETH_Token0_lpAddress全0
             console.log(i,":lp address is: ", lpAddress);
 
@@ -114,6 +107,7 @@ describe("UniSwap Gas Predict", function() {
             else amount0 = amount00;
             //确定amount0
             if (Number(amount0.toString()) > a) amount0 = amount0.div(a);
+            //amount0 = ethers.utils.parseUnits("1",18);
             console.log("<Amount of token0 =", amount0.toString(), ">\n");
             //确定需要weth的数量
             let wethAmount :BigNumber;
@@ -150,15 +144,17 @@ describe("UniSwap Gas Predict", function() {
             // 2.将数量为amount0的token0发送到lp
             let token0_transfer = await token0Contract.connect(owner).transfer(lpAddress, amount0);
             let token0_transfer_res = await token0_transfer.wait();
-            console.log("\n","transfer gasUsed: "+token0_transfer_res.gasUsed,"");
+            console.log("\n","transfer gasUsed: ",Number(token0_transfer_res.gasUsed),"");
             // 3.进行交换得到amount1的token1
             try {
                 let swap1_trx = await lpContract.connect(owner).swap(0, amount1, owner.address, [])
+                //console.log("\n--------\n",swap1_trx,"\n---------\n");
                 let swap1_res = await swap1_trx.wait();
-                console.log("","swap gasUsed: "+swap1_res.gasUsed,"");
+                console.log("\n--------\n",swap1_res,"\n---------\n");
+                console.log("","swap gasUsed: ",Number(swap1_res.gasUsed),"");
 
                 let total_gasUsed = Number(token0_transfer_res.gasUsed) + Number(swap1_res.gasUsed);
-                console.log("","total gasUsed: "+total_gasUsed,"");
+                console.log("","total gasUsed: ",Number(total_gasUsed),"");
                 lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].transGas = Number(token0_transfer_res.gasUsed);

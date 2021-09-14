@@ -21,3 +21,4 @@ data/
 *privateKeyPool*
 logs
 !package-lock.json
+/document/*
