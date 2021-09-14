@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
+import 'hardhat/console.sol';
 
 /**
  * @title Storage
@@ -22,8 +23,10 @@ contract StorageDemo {
      * @param num value to store
      */
     function store(uint256 num) public {
+        console.log('gas left',gasleft());
         number = num;
         emit NumberLog(0, number);
+        console.log('gas left',gasleft());
     }
 
     /**
