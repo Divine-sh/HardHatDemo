@@ -116,3 +116,13 @@ npm run test test/UniswapTest.ts
 swap函数：inputdata === 330
 
 transfer函数：inputdata === 138
+
+
+
+### 待改动
+
+1.数据结构：统计lp的token0和token1,统计从token0转1和token1转0两个方向的swapGas（重新跑数据）
+
+2.函数参数：新加tokenList，表明token转换的顺序过程
+
+3.transfer的gas基本一致，统一定为

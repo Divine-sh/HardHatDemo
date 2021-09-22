@@ -10,10 +10,11 @@ import {copyFileSync} from "fs";
 import {log} from "util";
 const fs = require('fs');
 import {libUnit} from "../abis/type_libUnit";
+import {ERC20_ABI} from "../abis/ERC20";
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_test.json';
+    const outputPath:string = './lpdata/lp_eth_gas_info.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -68,10 +69,10 @@ describe("UniSwap Gas Predict", function() {
         const [owner] = await ethers.getSigners();
         // 0.建立WETH合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-        for (let i = 0; i < 1; i++)
+        for (let i = 0; i < lpAdds.length; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0x69bEd2a194eE003Dad10306FBe937cFF3272eD0B';
+            //lpAddress = '0x69bEd2a194eE003Dad10306FBe937cFF3272eD0B';
             console.log(i,":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
@@ -85,7 +86,7 @@ describe("UniSwap Gas Predict", function() {
             else { console.log("lp的tokne1是WETH"); isWethToken0 = 0;}
 
             // 3.通过lpContract.getReserves()可以得到token0和token1的余额
-            let {blockTimestampLast, reserve0, reserve1} = await lpContract.getReserves();
+            let [reserve0, reserve1] = await lpContract.getReserves();
             console.log('\ntoken 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() );
 
             // 4.确定buyAmount，计算outAmount，将buyAmount抵押并由WETHContract转到lpAddress账户
@@ -114,28 +115,47 @@ describe("UniSwap Gas Predict", function() {
 
             // 5.调用lp合约的swap函数进行交换
             try {
-                let swap_trx;
+                let swap0t1_res,swap1t0_res;
                 if (isWethToken0 == 1)
-                { swap_trx = await lpContract.connect(owner).swap(0, outAmount, owner.address, []);}
+                {
+                    let swap0t1_trx = await lpContract.connect(owner).swap(0, outAmount, owner.address, []);
+                    swap0t1_res = await swap0t1_trx.wait();
+                    console.log("","swap0t1 gasUsed: ",Number(swap0t1_res.gasUsed),"");
+
+                    let token1Contract = new ethers.Contract(token1, ERC20_ABI, ethers.provider);
+                    let token1_transfer = await token1Contract.connect(owner).transfer(lpAddress, outAmount);
+                    let amount0 = await uniRouter.getAmountOut(outAmount,reserve1,reserve0);
+                    let swap1t0_trx = await lpContract.connect(owner).swap(amount0, 0, owner.address, [])
+                    swap1t0_res = await swap1t0_trx.wait();
+                    console.log("","swap1t0 gasUsed: ",Number(swap1t0_res.gasUsed),"\n");
+                }
                 else
-                { swap_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);}
-                let swap_res = await swap_trx.wait();
-                //console.log("\n--------\n",swap_res,"\n---------\n");
-                //console.log("","swap gasUsed: "+swap_res.gasUsed,"");
-                // 6.统计gasUsed之和
-                let total_gasUsed = Number(transfer_res.gasUsed) + Number(swap_res.gasUsed); //不算抵押的
-                //totalGas[i] = Number(total_gasUsed);
-                console.log("","Total gasUsed: "+total_gasUsed,"");
-                lib[i] = {lpAdd:"",deposGas:-1,transGas:-1,swapGas:-1,totalGas:-1,default:"success"};
+                {
+                    let swap1t0_trx = await lpContract.connect(owner).swap(outAmount, 0, owner.address, []);
+                    swap1t0_res = await swap1t0_trx.wait();
+                    console.log("","swap1t0 gasUsed: ",Number(swap1t0_res.gasUsed),"");
+
+                    let token0Contract = new ethers.Contract(token0, ERC20_ABI, ethers.provider);
+                    let token0_transfer = await token0Contract.connect(owner).transfer(lpAddress, outAmount);
+
+                    let amount1 = await uniRouter.getAmountOut(outAmount,reserve0,reserve1);
+                    let swap0t1_trx = await lpContract.connect(owner).swap(0, amount1, owner.address, [])
+                    swap0t1_res = await swap0t1_trx.wait();
+                    console.log("","swap0t1 gasUsed: ",Number(swap0t1_res.gasUsed),"\n");
+                }
+
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
-                lib[i].deposGas = Number(deposit_res.gasUsed);
-                lib[i].transGas = Number(transfer_res.gasUsed);
-                lib[i].swapGas = Number(swap_res.gasUsed);
-                lib[i].totalGas = Number(total_gasUsed);
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
+                lib[i].swapGas0t1 = isWethToken0 ? Number(swap0t1_res.gasUsed) : Number(swap1t0_res.gasUsed);
+                lib[i].swapGas1t0 = isWethToken0 ? Number(swap1t0_res.gasUsed) : Number(swap0t1_res.gasUsed);
             } catch (err) {
                 //console.log(err.toString());
-                lib[i] = {lpAdd:"",deposGas:-1,transGas:-1,swapGas:-1,totalGas:-1,default:"success"};
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
                 lib[i].default = err.toString();
             } finally {
                 fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');

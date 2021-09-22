@@ -26,31 +26,31 @@ describe("Storage Demo contract", function() {
         console.log("Init Contract")
     });
 
-    it("retrieve test", async function() {
-        let retrieveValue = await storageContract.retrieve()
-        // 合约上返回的数据模式是 BigNumber, 需要经过转化之后才能使用
-        console.log(retrieveValue, retrieveValue.toString());
-        assert (
-            retrieveValue.eq(BigNumber.from(initNumber))
-        );
-    });
-
-    it("set test more than 300", async function() {
-        // 更改合约状态
-        let newValue = 5000;
-        let [signer] = await ethers.getSigners()
-
-        let trx = await storageContract.store(newValue)
-        let res = await trx.wait()
-        console.log('trx res', res, res.gasUsed.toString())
-        console.log('from' , res.from, signer.address)
-
-        let retrieveValue = await storageContract.retrieve()
-
-        // 合约上返回的数据模式是 BigNumber, 需要经过转化之后才能使用
-        console.log(retrieveValue, retrieveValue.toString())
-        expect(retrieveValue).eq(newValue)
-    });
+    // it("retrieve test", async function() {
+    //     let retrieveValue = await storageContract.retrieve()
+    //     // 合约上返回的数据模式是 BigNumber, 需要经过转化之后才能使用
+    //     console.log(retrieveValue, retrieveValue.toString());
+    //     assert (
+    //         retrieveValue.eq(BigNumber.from(initNumber))
+    //     );
+    // });
+    //
+    // it("set test more than 300", async function() {
+    //     // 更改合约状态
+    //     let newValue = 5000;
+    //     let [signer] = await ethers.getSigners()
+    //
+    //     let trx = await storageContract.store(newValue)
+    //     let res = await trx.wait()
+    //     console.log('trx res', res, res.gasUsed.toString())
+    //     console.log('from' , res.from, signer.address)
+    //
+    //     let retrieveValue = await storageContract.retrieve()
+    //
+    //     // 合约上返回的数据模式是 BigNumber, 需要经过转化之后才能使用
+    //     console.log(retrieveValue, retrieveValue.toString())
+    //     expect(retrieveValue).eq(newValue)
+    // });
 
     it("populateTransaction storage", async function() {
         // 更改合约状态

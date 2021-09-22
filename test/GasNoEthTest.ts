@@ -54,7 +54,7 @@ describe("UniSwap Gas Predict", function() {
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
         const begin :number = 0;
-        const end :number = 1;//lpAdds.length;
+        const end :number = lpAdds.length;//lpAdds.length/1;
         const [owner] = await ethers.getSigners();
         let a :number = 3; //amount0需要除的值
         // 0.建立WETH合约实例和router合约实例
@@ -63,7 +63,7 @@ describe("UniSwap Gas Predict", function() {
         for (let i = begin; i < end; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0x79e0d4858af8071349469b6589a3c23c1fe1586e';
+            //lpAddress = '0x653780E77d4C4166BB5D0197d26f6A335F49141a';
             //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';//WETH_Token0_lpAddress全0
             console.log(i,":lp address is: ", lpAddress);
 
@@ -89,20 +89,28 @@ describe("UniSwap Gas Predict", function() {
                 [reserve0, reserve1] = await WETH_Token0_lpContract.getReserves();
             } catch(e){
                 console.log(e.toString());
-                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
                 lib[i].default = "Weth to Token0 lp address is: " + WETH_Token0_lpAddress;
                 continue;
+            } finally {
+                fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
             }
             //得到WETH/token0的lp的token0的余额
             let tmpToken0 = await WETH_Token0_lpContract.token0(); let isWethToken0 :number; let amount01 :BigNumber;
+            //WETH/token0的lp的reserve0和reserve1余额
+            let [reserve20, reserve21] = await WETH_Token0_lpContract.getReserves();
+            console.log('token 0', tmpToken0, reserve20.toString() ); console.log('token 1', await WETH_Token0_lpContract.token1(), reserve21.toString() );
+
             if (tmpToken0 == WETH) //WETH_Token0_lp的tokne0是WETH
             { console.log("WETH_Token0_lp的tokne0是WETH"); isWethToken0 = 1; amount01 = reserve1;}
             else
             { console.log("WETH_Token0_lp的tokne1是WETH"); isWethToken0 = 0; amount01 = reserve0;}
             console.log("<Reserve of token0 at WETH/token0 lp =", amount01.toString(), ">");
             //比较两个lp的token0余额，取较小的值
-            let amount0 :BigNumber; let x = Number(amount00.toString()); let y = Number(amount01.toString());
+            let amount0: BigNumber; let x = Number(amount00.toString()); let y = Number(amount01.toString());
             if (x>y) amount0 = amount01;
             else amount0 = amount00;
             //确定amount0
@@ -111,10 +119,22 @@ describe("UniSwap Gas Predict", function() {
             console.log("<Amount of token0 =", amount0.toString(), ">\n");
             //确定需要weth的数量
             let wethAmount :BigNumber;
-            if (isWethToken0 == 1) //WETH_Token0_lp的tokne0是WETH
-            { wethAmount = await uniRouter.getAmountIn(amount0,reserve0,reserve1);}
-            else //WETH_Token0_lp的tokne1是WETH
-            { wethAmount = await uniRouter.getAmountIn(amount0,reserve1,reserve0);}
+            try {
+                if (isWethToken0 == 1) //WETH_Token0_lp的token0是WETH
+                { wethAmount = await uniRouter.getAmountIn(amount0,reserve0,reserve1);}
+                else //WETH_Token0_lp的token1是WETH
+                { wethAmount = await uniRouter.getAmountIn(amount0,reserve1,reserve0);}
+            } catch(e) {
+                console.log(e.toString());
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
+                lib[i].lpAdd = lpAddress;
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
+                lib[i].default = e.toString();
+                continue;
+            } finally {
+                fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');
+            }
             console.log("<Amount of Weth =", ethers.utils.formatUnits(wethAmount,18), ">");
             let extra :BigNumber = ethers.utils.parseUnits("1",18);
             wethAmount = wethAmount.add(extra);
@@ -129,11 +149,11 @@ describe("UniSwap Gas Predict", function() {
             // 5.进行交换得到amount0的token0
             let token0Contract = new ethers.Contract(token0, ERC20_ABI, ethers.provider);
             ////let token0Reserve = await token0Contract.balanceOf(owner.address);console.log("Token 0 reserve of owner after transfer is:", token0Reserve.toString());
-            let swap0_trx;
+            let swapWt0_trx;
             if (tmpToken0 == WETH) //WETH_Token0_lp的tokne0是WETH
-            { swap0_trx = await WETH_Token0_lpContract.connect(owner).swap(0, amount0, owner.address, []);}
+            { swapWt0_trx = await WETH_Token0_lpContract.connect(owner).swap(0, amount0, owner.address, []);}
             else //WETH_Token0_lp的tokne1是WETH
-            { swap0_trx = await WETH_Token0_lpContract.connect(owner).swap(amount0, 0, owner.address, []);}
+            { swapWt0_trx = await WETH_Token0_lpContract.connect(owner).swap(amount0, 0, owner.address, []);}
             ////token0Reserve = await token0Contract.balanceOf(owner.address);console.log("Token 0 reserve of owner after transfer is:", token0Reserve.toString());
 
             //三、交换得到amount1的token1
@@ -143,27 +163,34 @@ describe("UniSwap Gas Predict", function() {
             console.log("<Amount of token1 =", amount1.toString(), ">");
             // 2.将数量为amount0的token0发送到lp
             let token0_transfer = await token0Contract.connect(owner).transfer(lpAddress, amount0);
-            let token0_transfer_res = await token0_transfer.wait();
-            console.log("\n","transfer gasUsed: ",Number(token0_transfer_res.gasUsed),"");
-            // 3.进行交换得到amount1的token1
+            //let token0_transfer_res = await token0_transfer.wait(); console.log("\n","transfer gasUsed: ",Number(token0_transfer_res.gasUsed),"");
+            // 3.进行交换得到数量为amount1的token1
             try {
-                let swap1_trx = await lpContract.connect(owner).swap(0, amount1, owner.address, [])
-                //console.log("\n--------\n",swap1_trx,"\n---------\n");
-                let swap1_res = await swap1_trx.wait();
-                console.log("\n--------\n",swap1_res,"\n---------\n");
-                console.log("","swap gasUsed: ",Number(swap1_res.gasUsed),"");
+                let swap0t1_trx = await lpContract.connect(owner).swap(0, amount1, owner.address, [])
+                let swap0t1_res = await swap0t1_trx.wait();
+                //console.log("\n--------\n",swap0t1_res,"\n---------\n");
+                console.log("","swap0t1 gasUsed: ",Number(swap0t1_res.gasUsed),"");
 
-                let total_gasUsed = Number(token0_transfer_res.gasUsed) + Number(swap1_res.gasUsed);
-                console.log("","total gasUsed: ",Number(total_gasUsed),"");
-                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
+                let token1Contract = new ethers.Contract(token1, ERC20_ABI, ethers.provider);
+                let token1_transfer = await token1Contract.connect(owner).transfer(lpAddress, amount1);
+                amount0 = await uniRouter.getAmountOut(amount1,reserve1,reserve0);
+                let swap1t0_trx = await lpContract.connect(owner).swap(amount0, 0, owner.address, [])
+                let swap1t0_res = await swap1t0_trx.wait();
+                //console.log("\n--------\n",swap1t0_res,"\n---------\n");
+                console.log("","swap1t0 gasUsed: ",Number(swap1t0_res.gasUsed),"\n");
+
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
-                lib[i].transGas = Number(token0_transfer_res.gasUsed);
-                lib[i].swapGas = Number(swap1_res.gasUsed);
-                lib[i].totalGas = Number(total_gasUsed);
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
+                lib[i].swapGas0t1 = Number(swap0t1_res.gasUsed);
+                lib[i].swapGas1t0 = Number(swap1t0_res.gasUsed);
             } catch (err) {
                 //console.log(err.toString());
-                lib[i] = {lpAdd:"",deposGas:-2,transGas:-2,swapGas:-2,totalGas:-2,default:"success"};
+                lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
+                lib[i].token0 = token0;
+                lib[i].token1 = token1;
                 lib[i].default = err.toString();
             } finally {
                 fs.writeFileSync(outputPath, JSON.stringify(lib, null, 4), 'utf-8');

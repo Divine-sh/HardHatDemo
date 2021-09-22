@@ -49,10 +49,10 @@ function estimateLP(lp: lpAddress[]): number{
         fs.writeFileSync('./lpdata/unresolved.json', JSON.stringify(unResolveLp, null, 4), 'utf-8');
         //需要将WETH转入lp0，再进行swap将token0转入lp1
         let res0 = lpInfo.find((item)=>{ return item.lpAdd.toUpperCase() == lp[0].toUpperCase()});
-        if (res0 == undefined) { console.log("can not find ",lp[0]);}
+        if (res0 == undefined) { console.log("Can not find ",lp[0],"!!!");}
         else { console.log("lp[",0,"]", lp[0], "tansferGas:", res0.transGas, "swapGas:", res0.swapGas);}
-
-        gasEstimated += lpInfo[0].transGas + lpInfo[0].swapGas;
+        if (res0 != undefined)
+        { gasEstimated += res0.transGas + res0.swapGas;}
         //进行其他lp的swap
         for (let i = 1; i < lp.length; i++)
         {
@@ -61,14 +61,16 @@ function estimateLP(lp: lpAddress[]): number{
             else { gasEstimated += 0; console.log("lp[",i,"]",lp[i],"gas:",0);}
         }
     }
-    gasEstimated -= 21000 * lp.length; //减去本地调用合约多使用的call的gas
+    console.log("lp.length: ",lp.length)
+    gasEstimated -= 21000 * (lp.length + 1); //减去本地调用合约多使用的call的gas
     gasEstimated -= 16 * 330 * lp.length; //减去inputdata多使用的gas，swap的inputdata长度为330
+    gasEstimated -= 16 * 138; //减去inputdata多使用的gas，transfer的inputdata长度为138
     return gasEstimated;
 }
 
 describe("Uniswap Gas Estimate", function (){
 
-    let lpADDs:lpAddress[] = ["0xd00ed1098180b1d6ed42b066555ab065c4515493","0xb533193c117920251b3a116e9c86c5347d67a6e6","0x9d406c4067a53f65de1a8a9273d55bfea5870a75"]
+    let lpADDs:lpAddress[] = ["0x7818a7e2ab095a15dcb348c7dd6d1d88d7ceabfd","0x40449d1f4c2d4f88dfd5b18868c76738a4e52fd4"]
     beforeEach(async () => {})
     it("Gas Analysis", async function (){
         let res = AnalysisLP();
