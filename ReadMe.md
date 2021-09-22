@@ -125,4 +125,4 @@ transfer函数：inputdata === 138
 
 2.函数参数：新加tokenList，表明token转换的顺序过程
 
-3.transfer的gas基本一致，统一定为
+3.transfer的gas基本一致，统一定为29694
