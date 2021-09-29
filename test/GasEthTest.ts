@@ -69,10 +69,10 @@ describe("UniSwap Gas Predict", function() {
         const [lll,owner] = await ethers.getSigners();
         // 0.建立WETH合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-        for (let i = 0; i < 1; i++)
+        for (let i = 0; i < 2; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0x75C5f8506Af2f43360a82d77cE168127D0D642a9';
+            lpAddress = '0x2C1D9C9B0c1b39B5262D54D3BA80E6a2E51E68Eb';
             console.log(i, ":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract

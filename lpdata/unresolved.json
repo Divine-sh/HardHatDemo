@@ -480,14 +480,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0xdd3df8c3FC24eA194E8181EdCbd5e372987f70a9",
-        "token0": "0x6366DD7363975A7b2871a6D5eeABdfB34c12cFe2",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0xdC7C304501222569D46aE64E71916240Ec5A2dAf",
         "token0": "0x72A3c1823B4b957C99c36039c214b3Eb04bB3Ab6",
         "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -518,14 +510,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0x75C5f8506Af2f43360a82d77cE168127D0D642a9",
-        "token0": "0x884bA99eaeF3fa6e8DF6229903a32f0Dd5aC5274",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x81d80DcdFC2Bd26531226630E2a204e1D908A2df",
@@ -680,14 +664,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0x27EB0849F4C14Cd3F40966d9c899d40b7060b370",
-        "token0": "0x85383d3604e0B1921707e00Fa43cA9b76b34dC3c",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x053ddA720a0576e4aabE85e7EfF03F542b927f68",
         "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "token1": "0xDD30d955ED77E737346aAB355bc1fb15cBF52C42",
@@ -718,14 +694,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0xEB0c257Fa2DDD92F308d557f85287171BF4e3AF1",
-        "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "token1": "0xceF936625fA50a19E59D2eaC6C01f631bD7E02f1",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x7681E0066832925CC3F1f725D5bD3E3BBA873a25",
@@ -760,14 +728,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0x0F0BFBDdfb21d120b6780cDbe1178F6e995E7525",
-        "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "token1": "0xC903207555518D127399e72e625Ed09Ca274F077",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x07c7B51a812F30aff4d5630926e47875D79354E7",
         "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "token1": "0xD4C8ebe14E0466C3f9280095d9f7fb9da0394f30",
@@ -790,14 +750,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: Transaction reverted without a reason string"
-    },
-    {
-        "lpAdd": "0x2367cd933C8a623b3fcA02f8049023309679B10d",
-        "token0": "0x448A022fB6b8Bd0268f1636Fd0B4e5E05940b2ef",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x49af5f0bbe10DFb3F9BA928982a48A8B2c385eF3",
@@ -846,14 +798,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: K'"
-    },
-    {
-        "lpAdd": "0x9DCe2c573528B38C70888f5E16aaFfb938a03E79",
-        "token0": "0x896E05E80fAe52772beDe915b31F35F21b1bC598",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0xb039A691d2599a4c7EC71010499eB390D7dE041B",
@@ -936,14 +880,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0xA06E3A93E6F55846103dC1fC5B187cda7461F796",
-        "token0": "0xB86563eA45f72Ff615F48d71AdFE7d1C4472864e",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x7e309c6A007510aB87f87E6FD92CAfdf1253c3aC",
         "token0": "0x6Ceb94aeED5ED652F1cE91FF389A6C8f89Cc2dBa",
         "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -984,14 +920,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0x838D0432f06A14939964370C8e914b382CE9B0c2",
-        "token0": "0x2660fc5995dc41b07c5094629B673697b8e1cac0",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x3D42d8baaA879462bd9c2A94Edde4a491E557fea",
         "token0": "0x49D8F5d56aa21F669435017974F649f501F50069",
         "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1006,14 +934,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0x9662F5bCbc6807c541Cb0Ef87A1d6918eF7c170A",
-        "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "token1": "0xe8787688445F4E4E6733b0a91a091ea167D7e949",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x8163447dBD0e250Ab1F1ce0c343a1e527a16a8B0",
@@ -1064,14 +984,6 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0xA506736E16bA60666e4bEc7D0EEBb6b877537FD4",
-        "token0": "0x9e67BBADA9bF786A0929edC1e1B110B466c3c813",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x16cd179A6BB4b4496a2BBC3297E740ae021290be",
         "token0": "0x4622A5B3E43BF866974d8780270FA528643532E7",
         "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1112,14 +1024,6 @@
         "default": "Error: Transaction reverted without a reason string"
     },
     {
-        "lpAdd": "0xeA0573551953873BDCd5EA78CF59D03f4d936372",
-        "token0": "0x29c325DB2361128e9208E327680CB1DE1f699Bb9",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0xC06c08Bd5b02422E19519251510C41d838737605",
         "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "token1": "0xC7CB792588647522aC14D89f69192B3eD4892a56",
@@ -1142,14 +1046,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: Transaction reverted without a reason string"
-    },
-    {
-        "lpAdd": "0x894b298b95B78004Cdb4203195d7875bc4b59F47",
-        "token0": "0x2e44bA588E64E3803ad544637F0c8508580A6166",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0xCd8104a576b2Be606c95ea3fEc661A7A0CFF7060",
@@ -1214,22 +1110,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: Transaction reverted without a reason string"
-    },
-    {
-        "lpAdd": "0x7f68F44a9855701b7578B202b5EA68212da9E63C",
-        "token0": "0x773b271811DD53ee93E3e18dD844a90E6329C6d3",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
-        "lpAdd": "0x429eADE0cACF0B8A13C19D22c37a44a1DBeCB641",
-        "token0": "0x3698B8fE1d2F5F66BBA8FAae871dFe2eF76Ba7AD",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0xFA04445bA88503fb98D8B1a8aEDDAbdc61A6F3F7",
@@ -1398,14 +1278,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: K'"
-    },
-    {
-        "lpAdd": "0x088973076Bb0612c895c835E7FF73e18A1BDf969",
-        "token0": "0x5CB9B847FbA8aAdb8a943fE19C1cc8439d7e00C5",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x7D147b4c3875865F97d2647A1f4e973938A7e6bf",
@@ -1808,14 +1680,6 @@
         "default": "Error: Transaction reverted without a reason string"
     },
     {
-        "lpAdd": "0xa700D0ABc1Bd01BB77518A543B2858641b3fdAed",
-        "token0": "0x2ae6885dFf49358f519cfe4E32f9c7047195C023",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x093dc79c602e30e3ad7623cb2BdA6257A4c56615",
         "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "token1": "0xFe9677860D6DB82F52b5081BFD33C225b6671E83",
@@ -1838,14 +1702,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0xA2123905FF2576cbE7CdA3b94dA58464Ff5241dC",
-        "token0": "0x6DD1796adA4c8BE78C1e234B884e996275C6cd00",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x3558A1d826B2625B4e0BeD1a6a356422F1c60ae8",
@@ -1880,14 +1736,6 @@
         "default": "Error: Transaction reverted without a reason string"
     },
     {
-        "lpAdd": "0x4543b7bA0C751Dc424A6b6CA42cc65151F37196a",
-        "token0": "0x29b61be6FA3C82dF748338d6390e276EA78844a8",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x45b485d6E659bB1A2c4B4FB22A6984364a044850",
         "token0": "0x45606ad0Fb56049BE2D269716b90Fcb9c62c4fe1",
         "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1902,14 +1750,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: Transaction reverted without a reason string"
-    },
-    {
-        "lpAdd": "0x16222F95F26d58027b37224E03c4B1470B0cC4e2",
-        "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "token1": "0xE29B6a3B938471dF7941a5Cd819E19ff7B6e3Da0",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x7243B45673edF66Be5Df3E7782C49Fb9a13B2A88",
@@ -1966,14 +1806,6 @@
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0xDb9F58D4DD10734Ac5eFD1D24165B0D2eEfD6c81",
-        "token0": "0x3Ab52f869740D90bFF0aAcbaa119085b1Fcad87e",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0x63B02E239bd1E665C2146f6237d90a693A277a02",
@@ -2080,28 +1912,12 @@
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
     },
     {
-        "lpAdd": "0x2C1D9C9B0c1b39B5262D54D3BA80E6a2E51E68Eb",
-        "token0": "0x953848d3d56d7f1D840e8ba157B766468c702Ab9",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
-    },
-    {
         "lpAdd": "0x087D40B8274Fa249fc209622419B7831E6BDf202",
         "token0": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "token1": "0xd87Fd842A131E1b65971Cf505f2D9386fc30D9D0",
         "swapGas0t1": -2,
         "swapGas1t0": -3,
         "default": "Error: VM Exception while processing transaction: reverted with reason string 'UniswapV2: INSUFFICIENT_INPUT_AMOUNT'"
-    },
-    {
-        "lpAdd": "0xC389AA4b1CC7bdCEdD919184845bCb6426225238",
-        "token0": "0x867eE14d9A2fFC4A95B01d80192976Ff43526453",
-        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "swapGas0t1": -2,
-        "swapGas1t0": -3,
-        "default": "Error: VM Exception while processing transaction: reverted with reason string 'SafeMath: subtraction overflow'"
     },
     {
         "lpAdd": "0xF46A63bEc9Ffbc5A842e3174d18e1004DFb6F32A",

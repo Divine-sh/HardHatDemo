@@ -1,0 +1,18 @@
+[
+    {
+        "lpAdd": "0x2C1D9C9B0c1b39B5262D54D3BA80E6a2E51E68Eb",
+        "token0": "0x953848d3d56d7f1D840e8ba157B766468c702Ab9",
+        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "swapGas0t1": 112657,
+        "swapGas1t0": 98169,
+        "default": "success"
+    },
+    {
+        "lpAdd": "0x2C1D9C9B0c1b39B5262D54D3BA80E6a2E51E68Eb",
+        "token0": "0x953848d3d56d7f1D840e8ba157B766468c702Ab9",
+        "token1": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "swapGas0t1": 89901,
+        "swapGas1t0": 81141,
+        "default": "success"
+    }
+]
