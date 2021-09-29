@@ -14,7 +14,7 @@ import {ERC20_ABI} from "../abis/ERC20";
 describe("UniSwap Gas Predict", function() {
 
     const inputPath:string = './lpdata/white_eth.txt';
-    const outputPath:string = './lpdata/lp_eth_gas_info.json';
+    const outputPath:string = './lpdata/lp_eth_gas_info_unresolved.json';
     let uniFactory: IUniswapV2Factory;
     //let uniRouter: unknown;
     const UNI_FACTORY = configs.TokenConfig.UNISWAP_FACTORY;
@@ -66,14 +66,14 @@ describe("UniSwap Gas Predict", function() {
 
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
-        const [owner] = await ethers.getSigners();
+        const [lll,owner] = await ethers.getSigners();
         // 0.建立WETH合约实例
         const WETHContract = new ethers.Contract(WETH, WETH_ABI, ethers.provider);
-        for (let i = 0; i < lpAdds.length; i++)
+        for (let i = 0; i < 1; i++)
         {
             lpAddress = lpAdds[i];
-            //lpAddress = '0x69bEd2a194eE003Dad10306FBe937cFF3272eD0B';
-            console.log(i,":lp address is: ", lpAddress);
+            lpAddress = '0x75C5f8506Af2f43360a82d77cE168127D0D642a9';
+            console.log(i, ":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract
             let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
@@ -123,6 +123,7 @@ describe("UniSwap Gas Predict", function() {
                     console.log("","swap0t1 gasUsed: ",Number(swap0t1_res.gasUsed),"");
 
                     let token1Contract = new ethers.Contract(token1, ERC20_ABI, ethers.provider);
+                    outAmount = outAmount.div(2);
                     let token1_transfer = await token1Contract.connect(owner).transfer(lpAddress, outAmount);
                     let amount0 = await uniRouter.getAmountOut(outAmount,reserve1,reserve0);
                     let swap1t0_trx = await lpContract.connect(owner).swap(amount0, 0, owner.address, [])
@@ -136,8 +137,14 @@ describe("UniSwap Gas Predict", function() {
                     console.log("","swap1t0 gasUsed: ",Number(swap1t0_res.gasUsed),"");
 
                     let token0Contract = new ethers.Contract(token0, ERC20_ABI, ethers.provider);
-                    let token0_transfer = await token0Contract.connect(owner).transfer(lpAddress, outAmount);
 
+                    // console.log(owner.address)
+                    let ownerTk0Balance = await token0Contract.balanceOf(owner.address); ////////////////////////////////////
+                    // console.log(ownerTk0Balance.toString());
+                    // console.log(outAmount.toString());
+                    outAmount = outAmount.div(2);
+                    // console.log(outAmount.toString());
+                    let token0_transfer = await token0Contract.connect(owner).transfer(lpAddress, outAmount);
                     let amount1 = await uniRouter.getAmountOut(outAmount,reserve0,reserve1);
                     let swap0t1_trx = await lpContract.connect(owner).swap(0, amount1, owner.address, [])
                     swap0t1_res = await swap0t1_trx.wait();
@@ -151,7 +158,7 @@ describe("UniSwap Gas Predict", function() {
                 lib[i].swapGas0t1 = isWethToken0 ? Number(swap0t1_res.gasUsed) : Number(swap1t0_res.gasUsed);
                 lib[i].swapGas1t0 = isWethToken0 ? Number(swap1t0_res.gasUsed) : Number(swap0t1_res.gasUsed);
             } catch (err) {
-                //console.log(err.toString());
+                console.log(err.toString());
                 lib[i] = {lpAdd:"",token0:"",token1:"",swapGas0t1:-2,swapGas1t0:-3,default:"success"};
                 lib[i].lpAdd = lpAddress;
                 lib[i].token0 = token0;

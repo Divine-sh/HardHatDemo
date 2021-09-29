@@ -126,3 +126,22 @@ transfer函数：inputdata === 138
 2.函数参数：新加tokenList，表明token转换的顺序过程
 
 3.transfer的gas基本一致，统一定为29694
+
+从16037继续，每次跑的第一个有点问题，最后调整一下（从16036开始跑，16037就正常了）
+
+
+
+### 接口
+
+```typescript
+function estimateLP(lp: lpAddress[], tkl: string[]): number{
+	...
+}
+/**
+ * lp: lp地址数组
+ * tkl: tokenlist token数组，按照交换的顺序排列
+ * 过程：
+ *	  加上固定的transferGas：29694；
+ *    每个lp对应一个token，首先是WETH->token1，从lp对应的libUnit中获取对应方向的swapGas，加到估算值中
+ */
+```

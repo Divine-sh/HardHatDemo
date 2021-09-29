@@ -1,5 +1,6 @@
 import {beforeEach, it} from "mocha";
 import {libUnit} from "../abis/type_libUnit";
+import configs from "../src/config";
 import Min = Mocha.reporters.Min;
 const fs = require('fs');
 
@@ -33,32 +34,51 @@ function AnalysisLP(): Array<number>{
 
 function estimateLP(lp: lpAddress[]): number{
     let gasEstimated:number = 0;
-    if (fs.existsSync(inputPath)) //判断是否存在此文件
-    {   //创建lp地址数组和gasUsed数组
+    const wethToken = configs.TokenConfig.WETH;
+    let nextToken:string = "0x000000";
+    if (fs.existsSync(inputPath)) { //判断是否存在此文件
+        //创建lp地址数组和gasUsed数组
         let lpInfo: libUnit[] = [];
         //let lpAdds: lpAddress[] = [];
         let unResolveLp: string[] = [];
         //读取文件内容，并转化为Json对象
         let lpGasJsonData = JSON.parse(fs.readFileSync(inputPath,"utf-8"));
-        for (let lpA of lpGasJsonData)
-        {
+        for (let lpA of lpGasJsonData) {
             lpInfo.push(lpA); //lpAdds.push(lpA.lpAdd);
             if (lpA.default != "success") { unResolveLp.push(lpA);}
         }
-
         fs.writeFileSync('./lpdata/unresolved.json', JSON.stringify(unResolveLp, null, 4), 'utf-8');
+
         //需要将WETH转入lp0，再进行swap将token0转入lp1
+        let transferGas:number = 29694; //transfer消耗的gas
+        gasEstimated += transferGas; console.log("tansferGas:", transferGas);
+        //需要获得lp0的swapGas，首先需要判断方向
         let res0 = lpInfo.find((item)=>{ return item.lpAdd.toUpperCase() == lp[0].toUpperCase()});
-        if (res0 == undefined) { console.log("Can not find ",lp[0],"!!!");}
-        else { console.log("lp[",0,"]", lp[0], "tansferGas:", res0.transGas, "swapGas:", res0.swapGas);}
-        if (res0 != undefined)
-        { gasEstimated += res0.transGas + res0.swapGas;}
+        if (res0 != undefined) {
+            if (res0.token0 == wethToken)
+            { console.log("lp[",0,"]", lp[0], "swapGas:", res0.swapGas0t1); gasEstimated += res0.swapGas0t1; nextToken = res0.token1;}
+            else if (res0.token1 == wethToken)
+            { console.log("lp[",0,"]", lp[0], "swapGas:", res0.swapGas1t0); gasEstimated += res0.swapGas1t0; nextToken = res0.token0; }
+            else
+            { console.log("lp0中不包含Weth!!!"); return -1; }
+        }
+        else {
+            console.log("Can not find ",lp[0],"!!!");
+        }
         //进行其他lp的swap
-        for (let i = 1; i < lp.length; i++)
-        {
+        for (let i = 1; i < lp.length; i++) {
             let res = lpInfo.find((item)=>{ return item.lpAdd.toUpperCase() == lp[i].toUpperCase()});
-            if (res != undefined && res.swapGas > 0) { gasEstimated += res.swapGas; console.log("lp[",i,"]",lp[i],"swapGas:",res.swapGas);}
-            else { gasEstimated += 0; console.log("lp[",i,"]",lp[i],"gas:",0);}
+            if (res != undefined) {
+                if (res.token0 == nextToken)
+                { gasEstimated += res.swapGas0t1; console.log("lp[",i,"]",lp[i],"swapGas:",res.swapGas0t1); nextToken = res.token1; }
+                else if (res.token1 == nextToken)
+                { gasEstimated += res.swapGas1t0; console.log("lp[",i,"]",lp[i],"swapGas:",res.swapGas1t0); nextToken = res.token0; }
+                else
+                { console.log("存在token顺序错误!!!"); return -1; }
+            }
+            else {
+                console.log("lp[",i,"]",lp[i],"gas:",0); console.log("Can not find lp[", i, "]:", lp[i], "!!!");
+            }
         }
     }
     console.log("lp.length: ",lp.length)
