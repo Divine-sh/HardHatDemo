@@ -6,6 +6,7 @@ const fs = require('fs');
 
 type lpAddress = string;
 const inputPath:string = './lpdata/lp_all_gas_info.json';
+//const inputPath:string = './lpdata/lp_eth_gas_info_unresolved.json';
 
 function AnalysisLP(): Array<number>{
     //分析lp的swapGas的最大值，最小值，平均值
@@ -92,11 +93,11 @@ describe("Uniswap Gas Estimate", function (){
 
     let lpADDs:lpAddress[] = ["0x7818a7e2ab095a15dcb348c7dd6d1d88d7ceabfd","0x40449d1f4c2d4f88dfd5b18868c76738a4e52fd4"]
     beforeEach(async () => {})
-    it("Gas Analysis", async function (){
-        let res = AnalysisLP();
-        let MaxSwapGas = res[0]; let MinSwapGas = res[1]; let AveSwapGas = res[2];
-        console.log("Gas Analysis: ");console.log("MaxSwapGas: ",MaxSwapGas);console.log("MinSwapGas: ",MinSwapGas);console.log("AveSwapGas: ", AveSwapGas);
-    });
+    // it("Gas Analysis", async function (){
+    //     let res = AnalysisLP();
+    //     let MaxSwapGas = res[0]; let MinSwapGas = res[1]; let AveSwapGas = res[2];
+    //     console.log("Gas Analysis: ");console.log("MaxSwapGas: ",MaxSwapGas);console.log("MinSwapGas: ",MinSwapGas);console.log("AveSwapGas: ", AveSwapGas);
+    // });
 
     it("Gas Estimate", async function (){
         console.log("Gas Estimate: ",estimateLP(lpADDs));
