@@ -83,7 +83,7 @@ function estimateLP(lp: lpAddress[]): number{
         }
     }
     console.log("lp.length: ",lp.length)
-    gasEstimated -= 21000 * (lp.length + 1); //减去本地调用合约多使用的call的gas
+    gasEstimated -= 21000 * lp.length; //减去本地调用合约多使用的call的gas
     gasEstimated -= 16 * 330 * lp.length; //减去inputdata多使用的gas，swap的inputdata长度为330
     gasEstimated -= 16 * 138; //减去inputdata多使用的gas，transfer的inputdata长度为138
     return gasEstimated;
@@ -91,7 +91,7 @@ function estimateLP(lp: lpAddress[]): number{
 
 describe("Uniswap Gas Estimate", function (){
 
-    let lpADDs:lpAddress[] = ["0x7818a7e2ab095a15dcb348c7dd6d1d88d7ceabfd","0x40449d1f4c2d4f88dfd5b18868c76738a4e52fd4"]
+    let lpADDs:lpAddress[] = ['0x7818a7e2ab095a15dcb348c7dd6d1d88d7ceabfd','0x40449d1f4c2d4f88dfd5b18868c76738a4e52fd4']
     beforeEach(async () => {})
     // it("Gas Analysis", async function (){
     //     let res = AnalysisLP();

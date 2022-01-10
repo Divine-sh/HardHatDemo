@@ -72,7 +72,7 @@ describe("UniSwap Gas Predict", function() {
         for (let i = 0; i < 2; i++)
         {
             lpAddress = lpAdds[i];
-            lpAddress = '0x2C1D9C9B0c1b39B5262D54D3BA80E6a2E51E68Eb';
+            lpAddress = '0x43ae24960e5534731fc831386c07755a2dc33d47';
             console.log(i, ":lp address is: ", lpAddress);
 
             // 1.先通过utils.uniswapTools.getIUniswapV2Pair(lpAddress)建立lp合约实例lpContract

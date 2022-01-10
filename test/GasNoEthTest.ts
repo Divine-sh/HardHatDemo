@@ -54,7 +54,7 @@ describe("UniSwap Gas Predict", function() {
     it("Get LP and test Swap ", async function() {
         this.timeout(0);
         const begin :number = 0;
-        const end :number = lpAdds.length;//lpAdds.length/1;
+        const end :number = 2;//lpAdds.length/1;
         const [owner] = await ethers.getSigners();
         let a :number = 3; //amount0需要除的值
         // 0.建立WETH合约实例和router合约实例
@@ -63,7 +63,7 @@ describe("UniSwap Gas Predict", function() {
         for (let i = begin; i < end; i++)
         {
             lpAddress = lpAdds[i];
-            //lpAddress = '0x653780E77d4C4166BB5D0197d26f6A335F49141a';
+            lpAddress = '0xd535dbf27942551a98cd0723552bdaf70628dbf8';
             //lpAddress = '0x5a1ABc007f031Aa58238f45941D965cE6892FDfF';//WETH_Token0_lpAddress全0
             console.log(i,":lp address is: ", lpAddress);
 
@@ -71,8 +71,10 @@ describe("UniSwap Gas Predict", function() {
             // 1.建立token0和token1的lp实例
             let lpContract = await utils.uniswapTools.getIUniswapV2Pair(lpAddress);
             // 2.得到两种token地址和余额
-            let token0 = await lpContract.token0(); let token1 = await lpContract.token1();
-            let [reserve0, reserve1] = await lpContract.getReserves();
+            //let token0 = await lpContract.token0(); let token1 = await lpContract.token1();
+            //let [reserve0, reserve1] = await lpContract.getReserves();
+            let token1 = await lpContract.token0(); let token0 = await lpContract.token1();
+            let [reserve1, reserve0] = await lpContract.getReserves();
             console.log('token 0', token0, reserve0.toString() ); console.log('token 1', token1, reserve1.toString() );
             // console.log(typeof reserve0);console.log(Object.getOwnPropertyNames(reserve0));console.log(reserve0._isBigNumber);
             // 3.确定amount0(此时无法确定，因为WETH/token0的lp可能没有这么多的token0，所以amount0 = Min(WETH/token0的lp的token0余额，lp的token1余额对应的最大token0的量).div(a))

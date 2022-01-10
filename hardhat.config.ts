@@ -9,9 +9,16 @@ const pkey:string = process.env.PRIVATE_KEY || "6a5508b9ca8a09217789fc9d2b376880
 const ETH_RPC = process.env.ETH_RPC||"http://39.105.105.233:3335" //office run time defuatl
 
 const newWallet = ethers.Wallet.createRandom();
+const newWallet2 = ethers.Wallet.createRandom();
 
 const config: HardhatUserConfig = {
-  solidity: { version: '0.7.6' },
+  //solidity: { version: '0.7.6' },
+  solidity: {
+    compilers: [    //可指定多个sol版本
+      {version: "0.6.12"},
+      {version: "0.7.6"}
+    ]
+  },
   networks: {
     hardhat: {
       // loggingEnabled: true,
@@ -28,6 +35,10 @@ const config: HardhatUserConfig = {
         {
           'privateKey': newWallet.privateKey,
           balance:'1000000000000000000000000'
+        },
+        {
+          'privateKey': newWallet2.privateKey,
+          balance:'0'
         }
       ],
       hardfork: "london",
